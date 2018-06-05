@@ -1,3 +1,13 @@
+body {
+    background: #d1d1d1;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 .center-all {
     display: flex;
     align-items: center;
@@ -8,4 +18,34 @@
 
 .center-all>* {
     flex: 1;
+}
+
+/* Floor grid */
+
+.floor-container {
+    display: flex;
+    flex-direction: column;
+}
+
+#map-trash {
+    background: lightblue;
+    height: 500px;
+}
+
+p-5 {
+    padding: 5px;
+}
+
+m-5 {
+    margin: 5px;
+}
+
+.map-palette-container {
+    height: 100px;
+    background: white;
+    width: 100%;
+}
+
+.bg-transparent {
+    background: transparent;
 }
