@@ -1,0 +1,11 @@
+.center-all {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* All the immediate children of .center-all will have equal width allocated */
+
+.center-all>* {
+    flex: 1;
+}
