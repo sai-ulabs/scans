@@ -1,0 +1,13 @@
+{
+  "name": "scans",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "browser-sync start --server --files \"src/**/*\" --startPath \"src/index.html\""
+  },
+  "devDependencies": {
+    "browser-sync": "^2.24.4",
+    "lowdb": "^1.0.0"
+  }
+}

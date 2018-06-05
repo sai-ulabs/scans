@@ -1,0 +1,70 @@
+html,
+body {
+    box-sizing: border-box;
+}
+
+.rect-style {
+    height: 20px;
+    width: 20px;
+    border-radius: 10px;
+}
+
+.computer-style {
+    border: none;
+    text-decoration: none;
+    /* height: 20px;
+  width: 20px; */
+    /* border-radius: 15px; background-color: #e85d75; */
+    /* top: 0;
+  left: 0; */
+}
+
+.computer-image {
+    height: 20px;
+    width: 30px;
+}
+
+.map-grid .ui-selecting {
+    background: #e0e0e0 !important;
+}
+
+.map-grid .ui-selected {
+    background: #808080 !important;
+    color: white;
+}
+
+.map-grid .ui-state-active {
+    /* background: #808080 !important; */
+    color: white;
+    /* border: 1px dotted #e85d75; */
+    border: 1px dotted #50a745;
+}
+
+.map-grid .ui-state-hover {
+    /* background: #808080 !important; */
+    color: white;
+    border: 3px solid #50a745;
+}
+
+.map-trash-state-active {
+    color: #e85d75;
+    /* background: #808080 !important; */
+    border: 1px solid #e85d75;
+}
+
+.map-trash-state-hover {
+    /* background: #808080 !important; */
+    border: 3px solid #e85d75;
+}
+
+#map-trash {
+    background: #808080;
+    flex: 1;
+}
+
+.halberd-copy {
+    height: 15px;
+    width: 15px;
+    border-radius: 10px;
+    background: lightseagreen;
+}
