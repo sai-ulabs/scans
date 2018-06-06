@@ -1,12 +1,28 @@
 var Grid = {
   gridContainer: $(".map-grid-container"),
+  createRoom: function(roomData) {
+    var bldg = $("[data-building='" + roomData.buildingId + "']");
+    var floor = bldg.find("[data-floor='" + roomData.floorId + "']");
+    var roomCoordinates = roomData.coordinates;
+    roomCoordinates.forEach(function(roomPart, i) {
+      var rows = parseInt(roomPart.x3 - roomPart.x0);
+      var cols = parseInt(roomPart.y1 - roomPart.y0);
+      for (var i = roomPart.x0; i < roomPart.x3; i++) {
+        for (var j = roomPart.y0; j < roomPart.y1; j++) {
+          floor.find("[data-tile='" + i + "x" + j + "']").css({
+            border: "none"
+          });
+        }
+      }
+    });
+  },
   createGrid: function() {
     var buildings = DB.db.get("buildings");
 
     // Utility functions for buliding grid
     function createTile(i, j, tileHeight, tileWidth) {
       var d = $(`<div></div>`);
-      d.attr("id", "tile-" + i + "x" + j)
+      d.attr("data-tile", i + "x" + j)
         .css({ width: tileWidth, height: tileHeight })
         .addClass("ui-widget-content droppable-tile");
 
@@ -29,6 +45,11 @@ var Grid = {
     for (var bldg = 0; bldg < buildings.value().length; bldg++) {
       var building = buildings.value()[bldg];
 
+      var buildingDiv = $("<div></div>").attr("data-building", building.id);
+      // Add building to grid
+
+      Grid.gridContainer.append(buildingDiv);
+
       var floors = DB.db.get("floors").filter({ buildingId: building.id });
 
       // Loop through all the floors in the building
@@ -46,7 +67,7 @@ var Grid = {
         var rowWidth = floorWidth;
 
         // Create floor grid to gridContainer
-        var floorDiv = $("<div></div>");
+        var floorDiv = $("<div></div>").attr("data-floor", floor.id);
         floorDiv.addClass("floor-container droppable map-grid");
 
         // Add width and height to the floorDiv
@@ -79,8 +100,21 @@ var Grid = {
         }
 
         // Append floor div to map-grid-container
-        Grid.gridContainer.append(floorDiv);
+        buildingDiv.append(floorDiv);
+
+        // Get rooms in the floor on this buliding
+        var rooms = DB.db
+          .get("rooms")
+          .filter({ buildingId: building.id, floorId: floor.id });
+
+        for (var room = 0; room < rooms.value().length; room++) {
+          var roomData = rooms.value()[room];
+          Grid.createRoom(roomData);
+        }
       }
+
+      // Add building to Grid
+      Grid.gridContainer.append(buildingDiv);
     }
 
     // Make Grids selectable
