@@ -4,7 +4,7 @@ var Grid = {
     $(".ui-selected").css("border", "none");
   },
 
-  createBlockFromDb: function(blockData) {
+  createBlockFromDb: function(blockData, blockType) {
     var bldg = $("[data-building='" + blockData.buildingId + "']");
     var floor = bldg.find("[data-floor='" + blockData.floorId + "']");
     var blockCoordinates = blockData.coordinates;
@@ -13,19 +13,22 @@ var Grid = {
       var cols = parseInt(blockPart.y3 - blockPart.y0);
       for (var i = blockPart.x0; i <= blockPart.x3; i++) {
         for (var j = blockPart.y0; j <= blockPart.y3; j++) {
-          floor.find("[data-tile='" + i + "x" + j + "']").css({
+          var block = floor.find("[data-tile='" + i + "x" + j + "']").css({
             border: "none"
           });
+          if (blockType === "division") {
+            block.css("background", "gray");
+          }
         }
       }
     });
   },
   createRoomFromDb: function(roomData) {
-    Grid.createBlockFromDb(roomData);
+    Grid.createBlockFromDb(roomData, "room");
   },
 
   createDivisionFromDb: function(divisionData) {
-    Grid.createBlockFromDb(divisionData);
+    Grid.createBlockFromDb(divisionData, "division");
   },
   createBlockFromSelection: function() {
     var newBlock = {};
