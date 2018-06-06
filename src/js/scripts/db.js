@@ -27,28 +27,17 @@ var DB = {
           name: "Room 0",
           buildingId: "building-0",
           floorId: "floor-0",
-          coordinates: [
-            // Is array of objects because rooms can be non-rectangular. Then it'll be split into parts of rectangles
-            {
-              x0: 5,
-              y0: 1,
-              x1: 5,
-              y1: 4,
-              x2: 10,
-              y2: 0,
-              x3: 10,
-              y3: 4
-            }
-          ]
+          coordinates: [{ x0: 2, y0: 1, x3: 5, y3: 3 }]
         }
       ],
+      divisions: [],
       computers: []
     }).write();
   }
 };
 
 $(document).ready(function() {
-  localStorage.removeItem("db");
+  // localStorage.removeItem("db");
   var adapter = new LocalStorage("db");
   var db = low(adapter);
   DB.init(db);
