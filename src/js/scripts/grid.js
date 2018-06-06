@@ -1,6 +1,6 @@
 var Grid = {
   gridContainer: $(".map-grid-container"),
-  createRoom: function(roomData) {
+  createRoomFromDb: function(roomData) {
     var bldg = $("[data-building='" + roomData.buildingId + "']");
     var floor = bldg.find("[data-floor='" + roomData.floorId + "']");
     var roomCoordinates = roomData.coordinates;
@@ -15,6 +15,9 @@ var Grid = {
         }
       }
     });
+  },
+  createRoomFromSelection: function() {
+    // Get coordinates of selected including floor and building
   },
   createGrid: function() {
     var buildings = DB.db.get("buildings");
@@ -109,7 +112,7 @@ var Grid = {
 
         for (var room = 0; room < rooms.value().length; room++) {
           var roomData = rooms.value()[room];
-          Grid.createRoom(roomData);
+          Grid.createRoomFromDb(roomData);
         }
       }
 

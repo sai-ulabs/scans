@@ -33,7 +33,7 @@
   </noscript>
   <div class="droppable">
 
-    <div class="center-all">
+    <div class="center-all p-5">
       <div class="grid-container">
         <div class="map-grid-container"></div>
       </div>
@@ -43,19 +43,11 @@
         </div>
       </div>
     </div>
-    <div id="map-palette-container" class="map-palette-container">
+    <div id="map-palette-container" class="palette map-palette-container p-5">
       <button class="palette-computer computer-style bg-transparent palette-item">
         <img src="img/computer.png" class="computer-image" />
       </button>
-      <!-- <button id="btnRemoveGridBorders" class="btn btn-warning float-right">
-        Remove Grid in Selection
-      </button>
-      <button id="btnShowGridBorders" class="btn btn-info mx-2 float-right">
-        Show Grid in Selection
-      </button>
-      <button id='btnLoadLayout' class="btn btn-danger mx-2 float-right">Load Layout</button>
-      <button id='btnSaveLayout' class="btn btn-dark mx-2 float-right">Save Layout</button>
-      <button id='btnStartRealTimeScans' class="btn btn-success mx-2 float-right">Start Scans</button> -->
+      <button id="btnCreateRoom" class="btn btn-warning">Create Room</button>
     </div>
   </div>
   <!-- <div class="droppable m-5">
@@ -112,6 +104,7 @@
   <script src="js/scripts/db.js"></script>
   <script src="js/scripts/grid.js"></script>
   <script src="js/scripts/dragDrop.js"></script>
+  <script src="js/scripts/palette.js"></script>
   <!-- <script src="js/globals.js"></script>
   <script src="js/storage.js"></script>
   <script src="js/api.js"></script>
