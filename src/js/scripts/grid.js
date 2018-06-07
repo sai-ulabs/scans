@@ -17,7 +17,8 @@ var Grid = {
             border: "none"
           });
           if (blockType === "division") {
-            block.css("background", "gray");
+            // Add properties to block if it is a division
+            // block.css("background", "gray");
           }
         }
       }
@@ -87,21 +88,26 @@ var Grid = {
   createRoomFromSelection: function() {
     var newRoom = Object.assign({}, Grid.createBlockFromSelection());
 
-    var roomName = prompt("Enter unique room name: ");
-    var roomId = roomName
-      .toLowerCase()
-      .replace(/\s/g, "-")
-      .replace(/[^\w-]+/g, "");
+    Alerts.inputRoom()
+      .done(function(roomName) {
+        var roomId = roomName
+          .toLowerCase()
+          .replace(/\s/g, "-")
+          .replace(/[^\w-]+/g, "");
 
-    newRoom.id = roomId;
-    newRoom.name = roomName;
+        newRoom.id = roomId;
+        newRoom.name = roomName;
 
-    // Push to config json after room is created
+        // Push to config json after room is created
 
-    DB.db
-      .get("rooms")
-      .push(newRoom)
-      .write();
+        DB.db
+          .get("rooms")
+          .push(newRoom)
+          .write();
+      })
+      .catch(function(err) {
+        Alerts.error(err);
+      });
   },
   createGrid: function() {
     var buildings = DB.db.get("buildings");
