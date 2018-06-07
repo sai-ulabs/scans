@@ -1,5 +1,6 @@
 var Grid = {
   gridContainer: $(".map-grid-container"),
+  floorHasImage: false,
   removeSelectedBorders: function() {
     $(".ui-selected").css("border", "none");
   },
@@ -162,9 +163,13 @@ var Grid = {
         var rowHeight = tileHeight;
         var rowWidth = floorWidth;
 
+        // Make it true if the user wants their own floor map
+        var hasBackgroundImg = Grid.floorHasImage;
         // Create floor grid to gridContainer
         var floorDiv = $("<div></div>").attr("data-floor", floor.id);
-        floorDiv.addClass("floor-container droppable map-grid");
+        hasBackgroundImg
+          ? floorDiv.addClass("floor-container droppable")
+          : floorDiv.addClass("floor-container droppable map-grid");
 
         // Add width and height to the floorDiv
         floorDiv.css({
@@ -172,6 +177,18 @@ var Grid = {
           width: floorWidth,
           background: "white"
         });
+
+        if (hasBackgroundImg) {
+          floorDiv.css({
+            background: hasBackgroundImg
+              ? `url('/src/img/demo-room.png')`
+              : // `url('https://picsum.photos/200/100/?random')`
+                "white",
+            "background-repeat": "no-repeat",
+            // "background-size": "cover",
+            "background-position": "center"
+          });
+        }
 
         for (var row = 0; row < rows; row++) {
           // Row container width = floorWidth
@@ -191,6 +208,11 @@ var Grid = {
                 y: col
               })
             );
+
+            if (hasBackgroundImg) {
+              tile.css({ background: "transparent", border: "none" });
+            }
+
             rowDiv.append(tile);
           }
         }

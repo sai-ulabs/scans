@@ -17,8 +17,8 @@ var DB = {
           buildingId: "building-0",
           rows: 20,
           cols: 20,
-          width: 1000,
-          height: 500
+          height: 500,
+          width: 1000
         }
       ],
       rooms: [
@@ -37,7 +37,7 @@ var DB = {
 };
 
 $(document).ready(function() {
-  // localStorage.removeItem("db");
+  localStorage.removeItem("db");
   var adapter = new LocalStorage("db");
   var db = low(adapter);
   DB.init(db);
