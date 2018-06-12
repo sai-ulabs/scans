@@ -8,6 +8,10 @@ var DB = {
         {
           id: "building-0",
           name: "Building-0"
+        },
+        {
+          id: "building-1",
+          name: "Building-1"
         }
       ],
       floors: [
@@ -16,7 +20,17 @@ var DB = {
           name: "Floor 0",
           buildingId: "building-0",
           rows: 20,
-          cols: 20,
+          cols: 30,
+          height: 500,
+          width: 1000,
+          floorMap: ""
+        },
+        {
+          id: "floor-1",
+          name: "Floor 1",
+          buildingId: "building-1",
+          rows: 20,
+          cols: 30,
           height: 500,
           width: 1000
         }
@@ -31,7 +45,28 @@ var DB = {
         }
       ],
       divisions: [],
-      computers: []
+      computers: [
+        {
+          id: "computer-1",
+          name: "Computer 1",
+          buildingId: "building-0",
+          floorId: "floor-0",
+          coordinates: {
+            x: 4,
+            y: 2
+          }
+        },
+        {
+          id: "computer-2",
+          name: "Computer 2",
+          buildingId: "building-1",
+          floorId: "floor-1",
+          coordinates: {
+            x: 8,
+            y: 5
+          }
+        }
+      ]
     }).write();
   }
 };

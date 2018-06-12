@@ -167,15 +167,18 @@ var Grid = {
         var hasBackgroundImg = Grid.floorHasImage;
         // Create floor grid to gridContainer
         var floorDiv = $("<div></div>").attr("data-floor", floor.id);
+
         hasBackgroundImg
           ? floorDiv.addClass("floor-container droppable")
           : floorDiv.addClass("floor-container droppable map-grid");
 
         // Add width and height to the floorDiv
-        floorDiv.css({
+        floorDiv.addClass("ui-widget-content").css({
           height: floorHeight,
           width: floorWidth,
-          background: "white"
+          background: "lightgreen"
+          // margin: "10px",
+          // border: "2px solid gray"
         });
 
         if (hasBackgroundImg) {
@@ -250,13 +253,49 @@ var Grid = {
     }
 
     // Make Grids selectable
-    $(".map-grid").selectable();
+    $(".map-grid").selectable({
+      filter: ".droppable-tile"
+    });
   },
 
   addRoomsToGrid: function() {},
-  addComputerToTile: function() {},
+  getTile: function(buildingId, floorId, coordinates) {
+    var building = $(`[data-building='${buildingId}']`);
+    var floor = building.find(`[data-floor='${floorId}']`);
+    var tile = floor.find(`[data-tile='${coordinates.x}x${coordinates.y}']`);
+    return tile;
+  },
+  addComputersToGrid: function() {
+    DragDrop.init();
+    var buildings = DB.db.get("buildings");
+    for (var bldg = 0; bldg < buildings.value().length; bldg++) {
+      var building = buildings.value()[bldg];
+      var floors = DB.db.get("floors").filter({ buildingId: building.id });
+
+      for (var flr = 0; flr < floors.value().length; flr++) {
+        var floor = floors.value()[flr];
+
+        var computersInFloor = DB.db
+          .get("computers")
+          .filter({ buildingId: building.id, floorId: floor.id })
+          .value();
+
+        // Add computer in tile at computer's coordinates
+        for (var comp = 0; comp < computersInFloor.length; comp++) {
+          let computer = computersInFloor[comp];
+          let coordinates = computer.coordinates;
+          let tile = Grid.getTile(building.id, floor.id, coordinates);
+          let droppableComputer = $(".palette-item");
+          let copy = DragDrop.createPaletteItemCopy(droppableComputer);
+
+          tile.append(copy);
+        }
+      }
+    }
+  },
   init: function() {
     Grid.createGrid();
+    Grid.addComputersToGrid();
   }
 };
 

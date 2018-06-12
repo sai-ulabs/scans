@@ -1,51 +1,51 @@
 body {
-    background: #d1d1d1;
+  background: #d1d1d1;
 }
 
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .center-all {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* All the immediate children of .center-all will have equal width allocated */
 
 .center-all>* {
-    flex: 1;
+  flex: 1;
 }
 
 /* Floor grid */
 
 .floor-container {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 #map-trash {
-    background: lightblue;
-    height: 500px;
+  background: lightblue;
+  height: 500px;
 }
 
 .p-5 {
-    padding: 50px;
+  padding: 50px;
 }
 
 .m-5 {
-    margin: 50px;
+  margin: 50px;
 }
 
 .map-palette-container {
-    height: 100px;
-    background: white;
-    width: 100%;
+  height: 100px;
+  background: white;
+  width: 100%;
 }
 
 .bg-transparent {
-    background: transparent;
+  background: transparent;
 }

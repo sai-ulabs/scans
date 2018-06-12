@@ -2,15 +2,22 @@ var DragDrop = {
   // A flag variable to disable clone if dragging inside grid
   isInsideTile: false,
   createPaletteItemCopy: function(element) {
-    var copy = element.clone();
+    var copy = element.last().clone();
     copy.attr("data-item-type", "computer");
     copy.attr("data-toggle", "modal");
     copy.attr("data-target", "#computerModal");
-    copy.addClass("deletable");
+    copy.addClass("deletable computer");
 
     // Show Modal when clicked on copy
     copy.on("click", function(e) {
       // Implement modals
+      Alerts.assignOrDeleteComputer().done(
+        function(value) {
+          if (value) {
+            $(this).remove();
+          }
+        }.bind(this)
+      );
     });
 
     copy.draggable({
@@ -27,7 +34,7 @@ var DragDrop = {
     return copy;
   },
   createDraggablePaletteItem: function(selector) {
-    $(selector).draggable({
+    var draggableItem = $(selector).draggable({
       helper: "clone",
       containment: ".droppable",
       cancel: false,
@@ -38,6 +45,7 @@ var DragDrop = {
         DragDrop.isInsideTile = false;
       }
     });
+    return draggableItem;
   },
   createDroppableTile: function(selector) {
     $(selector).droppable({
@@ -60,9 +68,22 @@ var DragDrop = {
       }
     });
   },
+  // createContextMenu: function(selector, type) {
+  //   $.contextMenu({
+  //     selector: ".computer",
+  //     callback: function(key, options) {
+  //       if (key === computerDelete) {
+  //       }
+  //     },
+  //     items: {
+  //       computerDelete: { name: "Delete" }
+  //     }
+  //   });
+  // },
   init: function() {
     DragDrop.createDraggablePaletteItem(".palette-item");
     DragDrop.createDroppableTile(".droppable-tile");
+    // DragDrop.createContextMenu(".computer", "computer");
   }
 };
 

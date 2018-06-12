@@ -10,6 +10,8 @@
     crossorigin="anonymous">
 
   <link rel="stylesheet" href="css/tools/jquery-ui.min.css">
+  <link rel="stylesheet" href="css/tools/jquery.contextMenu.min.css">
+  <link rel="stylesheet" href="css/tools/photoswipe.css">
 
   <link rel="stylesheet" href="css/map-styles.css">
   <link rel="stylesheet" href="css/map-layout.css">
@@ -31,16 +33,19 @@
   <noscript>
     You need to enable JavaScript to run this app.
   </noscript>
+  <div class="container">
+    <div class="form-inline">
+      <div class="form-group">
+        <select id="building-selector" class="form-control"></select>
+        <select id="floor-selector" class="form-control"></select>
+      </div>
+    </div>
+  </div>
   <div class="droppable">
 
     <div class="center-all p-5">
       <div class="grid-container">
         <div class="map-grid-container"></div>
-      </div>
-      <div class="">
-        <div id="map-trash" class="center-all">
-          Drag Items here to delete
-        </div>
       </div>
     </div>
     <div id="map-palette-container" class="palette map-palette-container p-5">
@@ -48,6 +53,7 @@
         <img src="img/computer.png" class="computer-image" />
       </button>
       <button id="btnCreateRoom" class="btn btn-warning">Create Room</button>
+      <button id="btnZoomFloor" class="btn btn-warning">Zoom Floor</button>
       <button id="btnRemoveBorders" class="btn btn-warning">Remove Selection</button>
       <div class="m-5">
         Does the floor have image ?
@@ -66,14 +72,18 @@
   <script src="js/tools/lodash.min.js"></script>
   <script src="js/tools/low.min.js"></script>
   <script src="js/tools/LocalStorage.min.js"></script>
+  <!-- <script src="js/tools/photoswipe.min.js"></script>
+  <script src="js/tools/photoswipe-ui-default.min.js"></script> -->
+  <!-- <script src="js/tools/jquery.ui.position.min.js"></script>
+    <script src="js/tools/jquery.contextMenu.min.js"></script> -->
 
   <!-- WARNING: DO NOT CHANGE THE ORDER OF THE SCRIPTS -->
 
 
   <script src="js/scripts/alerts.js"></script>
   <script src="js/scripts/db.js"></script>
-  <script src="js/scripts/grid.js"></script>
   <script src="js/scripts/dragDrop.js"></script>
+  <script src="js/scripts/grid.js"></script>
   <script src="js/scripts/palette.js"></script>
   <!-- <script src="js/globals.js"></script>
   <script src="js/storage.js"></script>
