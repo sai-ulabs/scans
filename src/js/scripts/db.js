@@ -72,7 +72,7 @@ var DB = {
 };
 
 $(document).ready(function() {
-  localStorage.removeItem("db");
+  //  localStorage.removeItem("db");
   var adapter = new LocalStorage("db");
   var db = low(adapter);
   DB.init(db);

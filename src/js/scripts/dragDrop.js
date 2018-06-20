@@ -59,11 +59,15 @@ var DragDrop = {
         ev.preventDefault();
 
         // Clone the copy of palette-item only if dragging from palette
+        var tileLocation = $(this).attr("data-location");
         if (!DragDrop.isInsideTile) {
           var copy = DragDrop.createPaletteItemCopy(ui.draggable);
+          copy.attr("data-location", tileLocation);
           $(this).append(copy);
         } else {
-          $(this).append(ui.draggable);
+          var draggedItem = ui.draggable;
+          draggedItem.attr("data-location", tileLocation);
+          $(this).append(draggedItem);
         }
       }
     });
