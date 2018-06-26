@@ -1,0 +1,173 @@
+body {
+  // background: #d1d1d1;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.center-all {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* All the immediate children of .center-all will have equal width allocated */
+
+.center-all > * {
+  flex: 1;
+}
+
+/* Floor grid */
+
+.floor-container {
+  display: flex;
+  flex-direction: column;
+}
+
+#map-trash {
+  background: lightblue;
+  height: 500px;
+}
+
+.map-palette-container {
+  height: 100px;
+  background: white;
+  width: 100%;
+}
+
+.bg-transparent {
+  background: transparent;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.flex-direction-column {
+  flex-direction: column !important;
+}
+
+.flex-direction-row {
+  flex-direction: row !important;
+}
+
+@mixin flex-justify($justifytype) {
+  justify-content: $justifytype !important;
+}
+
+@mixin flex-align($aligntype) {
+  align-items: $aligntype !important;
+}
+
+.justify-content {
+  &-spacearound {
+    @include flex-justify(space-around);
+  }
+  &-spacebetween {
+    @include flex-justify(space-between);
+  }
+  &-center {
+    @include flex-justify(center);
+  }
+}
+
+.align-items {
+  &-center {
+    @include flex-align(center);
+  }
+}
+
+.flex {
+  @for $i from 1 through 10 {
+    &-#{$i} {
+      flex: #{$i} !important;
+    }
+  }
+}
+
+.full-page {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 100vh;
+}
+
+.test-container {
+  width: 500px;
+}
+
+.border {
+  @for $i from 1 through 10 {
+    &-#{$i} {
+      border: #{$i}px solid grey !important;
+    }
+  }
+}
+
+.m {
+  @for $i from 1 through 10 {
+    &-#{$i} {
+      margin: $i * 10px !important;
+    }
+  }
+}
+
+.p {
+  @for $i from 1 through 10 {
+    &-#{$i} {
+      padding: $i * 10px !important;
+    }
+  }
+}
+
+.child-p {
+  @for $i from 1 through 10 {
+    &-#{$i} {
+      & > * {
+        padding: $i * 10px !important;
+      }
+    }
+  }
+}
+
+.child-m {
+  @for $i from 1 through 10 {
+    &-#{$i} {
+      & > * {
+        margin: $i * 10px !important;
+      }
+    }
+  }
+}
+
+$w-list: 10 25 50 75 100;
+.w {
+  @each $width in $w-list {
+    &-#{$width} {
+      width: unquote($width + "%") !important;
+    }
+  }
+}
+
+.hr {
+  -moz-border-bottom-colors: none;
+  -moz-border-image: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  border-color: #eeeeee -moz-use-text-color #ffffff;
+  border-style: solid none;
+  border-width: 0.2px 0;
+  margin: 18px 0;
+  height: 1px;
+}
+
+.center-child {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

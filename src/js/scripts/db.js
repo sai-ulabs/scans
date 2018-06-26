@@ -8,10 +8,6 @@ var DB = {
         {
           id: "building-0",
           name: "Building-0"
-        },
-        {
-          id: "building-1",
-          name: "Building-1"
         }
       ],
       floors: [
@@ -72,7 +68,7 @@ var DB = {
 };
 
 $(document).ready(function() {
-  //  localStorage.removeItem("db");
+  localStorage.removeItem("db");
   var adapter = new LocalStorage("db");
   var db = low(adapter);
   DB.init(db);
