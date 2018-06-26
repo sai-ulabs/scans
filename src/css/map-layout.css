@@ -295,4 +295,21 @@
   align-items: center;
 }
 
+.center-x {
+  margin: 0 auto;
+}
+
+.border-left {
+  border-left: 1px solid grey !important;
+}
+.border-right {
+  border-right: 1px solid grey !important;
+}
+.border-top {
+  border-top: 1px solid grey !important;
+}
+.border-bottom {
+  border-bottom: 1px solid grey !important;
+}
+
 /*# sourceMappingURL=map-layout.css.map */

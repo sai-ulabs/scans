@@ -171,3 +171,22 @@ $w-list: 10 25 50 75 100;
   justify-content: center;
   align-items: center;
 }
+
+.center-x {
+  margin: 0 auto;
+}
+
+.border {
+  &-left {
+    border-left: 1px solid grey !important;
+  }
+  &-right {
+    border-right: 1px solid grey !important;
+  }
+  &-top {
+    border-top: 1px solid grey !important;
+  }
+  &-bottom {
+    border-bottom: 1px solid grey !important;
+  }
+}

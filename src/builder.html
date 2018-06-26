@@ -72,22 +72,31 @@
         </select>
         <button class="btn btn-success">Done</button>
       </div>
-      <div class="content-space d-flex flex-direction-row justify-content-spacebetween flex-9">
-        <div class="sidebar-left flex-1 border-1 d-flex flex-direction-column align-items-center">
+      <div class="droppable content-space d-flex flex-direction-row justify-content-spacebetween flex-9">
+        <div class="sidebar-left flex-1 border-right d-flex flex-direction-column align-items-center">
           <button class="btn btn-lg btn-default w-75 m-2">Add Building</button>
           <button class="btn btn-lg btn-default w-75 m-2">Add Floor</button>
           <button class="btn btn-lg btn-default w-75 m-2">Add Floor Map</button>
           <div class="hr w-75"></div>
           <div class="h3">Widgets</div>
+          <div class="h5">(Drag & Drop)</div>
           <div id="map-palette-container" class="palette map-palette-container center-child">
             <button class="palette-computer computer-style bg-transparent palette-item">
               <img src="img/computer.png" class="computer-image" />
             </button>
           </div>
         </div>
-        <div class="container flex-8"></div>
-        <div class="sidebar-right flex-1 border-1">
-          <button style="margin:20px;">Hello</button>
+        <div class="container flex-8 bg-warning" style="overflow-y: auto; padding-bottom: 20px;">
+          <div class="h2 text-center building-title m-3">
+            Building 1
+          </div>
+          <div class="grid-container">
+            <div class="map-grid-container d-flex justify-content-center"></div>
+          </div>
+        </div>
+        <div class="sidebar-right flex-1 border-left d-flex flex-direction-column align-items-center">
+          <button id="btnCreateRoom" class="btn btn-lg btn-default w-75 m-2">Create Room</button>
+          <button id="btnRemoveBorders" class="btn btn-lg btn-default w-75 m-2">Cut Selection</button>
         </div>
       </div>
     </div>
