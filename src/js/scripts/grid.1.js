@@ -148,11 +148,15 @@ var Grid = {
   createGridForBuilding: function(buildingId) {
     var building = DB.db
       .get("buildings")
-      .filter({ id: buildingId })
+      .filter({
+        id: buildingId
+      })
       .value()[0];
     var floorsInBuilding = DB.db
       .get("floors")
-      .filter({ buildingId: buildingId })
+      .filter({
+        buildingId: buildingId
+      })
       .value();
 
     // Add buliding to the container
@@ -162,34 +166,18 @@ var Grid = {
     // Now in the building build the floors
     floorsInBuilding.forEach(function(floor, index) {
       // Start Floor Buliding
-      var floorDiv = Grid.createGridForFloor(building, floor, buildingDiv);
+      var floorDiv = Grid.createGridForFloor(building, floor);
 
       floorDiv.css({
         marginBottom: "10px"
       });
-
       // Add floor to the building
       buildingDiv.append(floorDiv);
 
-      // Create Rooms for this floor
-
-      Grid.createRoomsForFloor(building, floor);
-
-      // Create divisions for this floor
-      Grid.createDivisionsForFloor(building, floor);
-
-      // Add existing computers for this floor
-
-      Grid.addComputersToFloor(building, floor);
-
       // End Floor Buliding
     });
-
-    //   // Make Grids selectable
-    $(".map-grid").selectable({
-      filter: ".droppable-tile"
-    });
   },
+  addRoomsToGrid: function() {},
   createGridForFloor: function(building, floor) {
     // for (var flr = 0; flr < floors.value().length; flr++) {
     //   var floor = floors.value()[flr];
@@ -261,6 +249,32 @@ var Grid = {
       }
     }
 
+    // Create Rooms for this floor
+
+    Grid.createRoomsForFloor(building, floor);
+
+    // Create divisions for this floor
+    Grid.createDivisionsForFloor(building, floor);
+
+    // // Get rooms in the floor on this buliding
+    // var rooms = DB.db
+    //   .get("rooms")
+    //   .filter({ buildingId: building.id, floorId: floor.id });
+
+    // for (var room = 0; room < rooms.value().length; room++) {
+    //   var roomData = rooms.value()[room];
+    //   Grid.createRoomFromDb(roomData);
+    // }
+
+    // Get divisons in the floor on this building
+    // var divisions = DB.db
+    //   .get("divisions")
+    //   .filter({ buildingId: building.id, floorId: floor.id });
+
+    // for (var division = 0; division < divisions.value().length; division++) {
+    //   var divisionData = divisions.value()[division];
+    //   Grid.createDivisionFromDb(divisionData);
+    // }
     return floorDiv;
   },
   createRoomsForFloor: function(building, floor) {
@@ -285,30 +299,222 @@ var Grid = {
       Grid.createDivisionFromDb(divisionData);
     }
   },
+  // createGrid: function() {
+  //   var buildings = DB.db.get("buildings");
+
+  //   // // Utility functions for buliding grid
+  //   // function createTile(i, j, tileHeight, tileWidth) {
+  //   //   var d = $(`<div></div>`);
+  //   //   d.attr("data-tile", i + "x" + j)
+  //   //     .css({ width: tileWidth, height: tileHeight })
+  //   //     .addClass("ui-widget-content droppable-tile");
+
+  //   //   // $(`#row-${i}`).append(d);
+  //   //   return d;
+  //   // }
+
+  //   // function createRow(i, rowHeight, rowWidth) {
+  //   //   var row = $(`<div></div>`);
+  //   //   row
+  //   //     .attr("id", `row-${i}`)
+  //   //     .attr("data-row", `row-${i}`)
+  //   //     .css({
+  //   //       display: "flex",
+  //   //       height: rowHeight,
+  //   //       width: rowWidth
+  //   //     });
+  //   //   // $(".map-grid-container").append(row);
+  //   //   return row;
+  //   // }
+
+  //   // Loop through all the bulidings
+  //   for (var bldg = 0; bldg < buildings.value().length; bldg++) {
+  //     var building = buildings.value()[bldg];
+
+  //     // // Temporary to show only building that is shown
+  //     // if (building.id !== $("#building-selector").val()) {
+  //     //   continue;
+  //     // }
+
+  //     var buildingDiv = $("<div></div>").attr("data-building", building.id);
+
+  //     // Add building to grid
+
+  //     Grid.gridContainer.append(buildingDiv);
+
+  //     var floors = DB.db.get("floors").filter({ buildingId: building.id });
+
+  //     // Loop through all the floors in the building
+  //     for (var flr = 0; flr < floors.value().length; flr++) {
+  //       var floor = floors.value()[flr];
+  //       var floorName = floor.name;
+  //       var rows = floor.rows;
+  //       var cols = floor.cols;
+  //       var floorWidth = floor.width;
+  //       var floorHeight = floor.height;
+  //       var tileWidth = floorWidth / cols;
+  //       var tileHeight = floorHeight / rows;
+
+  //       var rowHeight = tileHeight;
+  //       var rowWidth = floorWidth;
+
+  //       // Make it true if the user wants their own floor map
+  //       var hasBackgroundImg = Grid.floorHasImage;
+  //       // Create floor grid to gridContainer
+  //       var floorDiv = $("<div></div>").attr("data-floor", floor.id);
+
+  //       hasBackgroundImg
+  //         ? floorDiv.addClass("floor-container droppable")
+  //         : floorDiv.addClass("floor-container droppable map-grid");
+
+  //       // Add width and height to the floorDiv
+  //       floorDiv.addClass("ui-widget-content").css({
+  //         height: floorHeight,
+  //         width: floorWidth,
+  //         background: "lightgreen"
+  //         // margin: "10px",
+  //         // border: "2px solid gray"
+  //       });
+
+  //       if (hasBackgroundImg) {
+  //         floorDiv.css({
+  //           background: hasBackgroundImg
+  //             ? `url('/src/img/demo-room.png')`
+  //             : // `url('https://picsum.photos/200/100/?random')`
+  //               "white",
+  //           "background-repeat": "no-repeat",
+  //           // "background-size": "cover",
+  //           "background-position": "center"
+  //         });
+  //       }
+
+  //       for (var row = 0; row < rows; row++) {
+  //         // Row container width = floorWidth
+  //         // Row height = floorHeight / rows
+  //         // var rowHeight = floorHeight / rows;
+  //         var rowDiv = Grid.createRow(row, rowHeight, rowWidth);
+  //         floorDiv.append(rowDiv);
+
+  //         for (var col = 0; col < cols; col++) {
+  //           var tile = Grid.createTile(row, col, tileHeight, tileWidth);
+  //           tile.attr(
+  //             "data-location",
+  //             JSON.stringify({
+  //               buildingId: building.id,
+  //               floorId: floor.id,
+  //               x: row,
+  //               y: col
+  //             })
+  //           );
+
+  //           if (hasBackgroundImg) {
+  //             tile.css({ background: "transparent", border: "none" });
+  //           }
+
+  //           rowDiv.append(tile);
+  //         }
+  //       }
+
+  //       // Append floor div to map-grid-container
+  //       buildingDiv.append(floorDiv);
+
+  //       // Get rooms in the floor on this buliding
+  //       var rooms = DB.db
+  //         .get("rooms")
+  //         .filter({ buildingId: building.id, floorId: floor.id });
+
+  //       for (var room = 0; room < rooms.value().length; room++) {
+  //         var roomData = rooms.value()[room];
+  //         Grid.createRoomFromDb(roomData);
+  //       }
+
+  //       // Get divisons in the floor on this building
+  //       var divisions = DB.db
+  //         .get("divisions")
+  //         .filter({ buildingId: building.id, floorId: floor.id });
+
+  //       for (
+  //         var division = 0;
+  //         division < divisions.value().length;
+  //         division++
+  //       ) {
+  //         var divisionData = divisions.value()[division];
+  //         Grid.createDivisionFromDb(divisionData);
+  //       }
+  //     }
+
+  //     // Add building to Grid
+  //     Grid.gridContainer.append(buildingDiv);
+  //   }
+
+  //   // Make Grids selectable
+  //   $(".map-grid").selectable({
+  //     filter: ".droppable-tile"
+  //   });
+  // },
+
   getTile: function(buildingId, floorId, coordinates) {
     var building = $(`[data-building='${buildingId}']`);
-
     var floor = building.find(`[data-floor='${floorId}']`);
-
     var tile = floor.find(`[data-tile='${coordinates.x}x${coordinates.y}']`);
-
     return tile;
   },
-  addComputersToFloor: function(building, floor) {
-    DragDrop.init();
-    var computersInFloor = DB.db
-      .get("computers")
-      .filter({ buildingId: building.id, floorId: floor.id })
-      .value();
+  // addComputersToGrid: function() {
+  //   DragDrop.init();
+  //   var buildings = DB.db.get("buildings");
+  //   for (var bldg = 0; bldg < buildings.value().length; bldg++) {
+  //     var building = buildings.value()[bldg];
+  //     var floors = DB.db.get("floors").filter({ buildingId: building.id });
 
-    // Add computer in tile at computer's coordinates
-    for (var comp = 0; comp < computersInFloor.length; comp++) {
-      let computer = computersInFloor[comp];
-      let coordinates = computer.coordinates;
-      let tile = Grid.getTile(building.id, floor.id, coordinates);
-      let droppableComputer = $(".palette-item");
-      let copy = DragDrop.createPaletteItemCopy(droppableComputer);
-      tile.append(copy);
+  //     for (var flr = 0; flr < floors.value().length; flr++) {
+  //       var floor = floors.value()[flr];
+
+  //       var computersInFloor = DB.db
+  //         .get("computers")
+  //         .filter({ buildingId: building.id, floorId: floor.id })
+  //         .value();
+
+  //       // Add computer in tile at computer's coordinates
+  //       for (var comp = 0; comp < computersInFloor.length; comp++) {
+  //         let computer = computersInFloor[comp];
+  //         let coordinates = computer.coordinates;
+  //         let tile = Grid.getTile(building.id, floor.id, coordinates);
+  //         let droppableComputer = $(".palette-item");
+  //         let copy = DragDrop.createPaletteItemCopy(droppableComputer);
+
+  //         tile.append(copy);
+  //       }
+  //     }
+  //   }
+  // },
+  addComputersToBuilding: function(building) {},
+  addComputersToFloor: function(building, floor) {},
+  addComputersToGrid: function() {
+    DragDrop.init();
+    var buildings = DB.db.get("buildings");
+    for (var bldg = 0; bldg < buildings.value().length; bldg++) {
+      var building = buildings.value()[bldg];
+      var floors = DB.db.get("floors").filter({ buildingId: building.id });
+
+      for (var flr = 0; flr < floors.value().length; flr++) {
+        var floor = floors.value()[flr];
+
+        var computersInFloor = DB.db
+          .get("computers")
+          .filter({ buildingId: building.id, floorId: floor.id })
+          .value();
+
+        // Add computer in tile at computer's coordinates
+        for (var comp = 0; comp < computersInFloor.length; comp++) {
+          let computer = computersInFloor[comp];
+          let coordinates = computer.coordinates;
+          let tile = Grid.getTile(building.id, floor.id, coordinates);
+          let droppableComputer = $(".palette-item");
+          let copy = DragDrop.createPaletteItemCopy(droppableComputer);
+
+          tile.append(copy);
+        }
+      }
     }
   },
   init: function() {
@@ -317,7 +523,7 @@ var Grid = {
     // Add change listener for the building to create that building
     $("#building-selector").on("change", function(e) {
       // Clear the center building container when building is changed
-      $("#building-title").text($("#building-selector option:selected").text());
+
       Grid.gridContainer.empty();
 
       var buildingId = $(this).val();
@@ -325,13 +531,11 @@ var Grid = {
       Grid.createGridForBuilding(buildingId);
     });
 
-    $("#building-title").text($("#building-selector option:selected").text());
-
     // Create building for the default building
     Grid.createGridForBuilding($("#building-selector").val());
 
     // Grid.createGrid();
-    // Grid.addComputersToGrid();
+    Grid.addComputersToGrid();
   }
 };
 
