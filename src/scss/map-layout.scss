@@ -16,7 +16,7 @@ body {
 
 /* All the immediate children of .center-all will have equal width allocated */
 
-.center-all > * {
+.center-all>* {
   flex: 1;
 }
 
@@ -127,7 +127,7 @@ body {
 .child-p {
   @for $i from 1 through 10 {
     &-#{$i} {
-      & > * {
+      &>* {
         padding: $i * 10px !important;
       }
     }
@@ -137,7 +137,7 @@ body {
 .child-m {
   @for $i from 1 through 10 {
     &-#{$i} {
-      & > * {
+      &>* {
         margin: $i * 10px !important;
       }
     }
@@ -189,4 +189,8 @@ $w-list: 10 25 50 75 100;
   &-bottom {
     border-bottom: 1px solid grey !important;
   }
+}
+
+.building-title {
+  color: #363536; // font-family: "Montserrat", sans-serif !important;
 }

@@ -6,7 +6,8 @@
   "scripts": {
     "sass": "sass --watch src/scss:src/css",
     "start": "browser-sync start --server --files \"src/**/*\" --startPath \"src/index.html\"",
-    "builder": "browser-sync start --server --files \"src/**/*\" --startPath \"src/builder.html\""
+    "builder": "browser-sync start --server --files \"src/**/*\" --startPath \"src/builder.html\"",
+    "builder-hotel": "concurrently \"npm run sass\" \"npm run builder\" "
   },
   "devDependencies": {
     "browser-sync": "^2.24.4",

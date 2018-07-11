@@ -1,3 +1,40 @@
+function generateComputersList() {
+  var computers = DB.getUnassignedComputerList();
+
+  // var list = $("<div class='btn-group-vertical' role='group'></div>");
+
+  // computers.forEach(function(computer, index) {
+  //   function assignComputer() {
+  //     console.log("here");
+
+  //     DB.db("computers")
+  //       .find({ id: computer.id })
+  //       .assign({ assigned: true });
+  //     console.log(`${computer.name} is assigned`);
+  //   }
+
+  //   var computerButton = $(
+  //     `<button class='btn btn-default'>${computer.name}</button>`
+  //   );
+
+  //   computerButton.on('click')
+
+  //   list.append(computerButton);
+  // });
+
+  // return list[0].outerHTML;
+
+  var computerIdName = {};
+
+  computers.forEach(function(computer, i) {
+    if (!computerIdName.hasOwnProperty(computer.id)) {
+      computerIdName[computer.id] = computer.name;
+    }
+  });
+
+  return computerIdName;
+}
+
 var Alerts = {
   error: function(err) {
     swal({
@@ -24,9 +61,13 @@ var Alerts = {
     var dfd = $.Deferred();
 
     swal({
-      title: "",
-      confirmButtonText: "Delete Computer",
-      confirmButtonColor: "#d33"
+      title: "Assign Computer",
+      input: "select",
+      inputOptions: generateComputersList(),
+      inputPlaceholder: "Select Computer",
+      showCancelButton: true,
+      cancelButtonText: "Delete Computer",
+      cancelButtonColor: "#d33"
     }).then(function(result) {
       if (result.value) {
         dfd.resolve(result.value);

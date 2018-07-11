@@ -102,10 +102,7 @@ var Grid = {
 
         // Push to config json after room is created
 
-        DB.db
-          .get("rooms")
-          .push(newRoom)
-          .write();
+        DB.addRoomToDb(newRoom);
       })
       .catch(function(err) {
         Alerts.error(err);
@@ -299,7 +296,7 @@ var Grid = {
     DragDrop.init();
     var computersInFloor = DB.db
       .get("computers")
-      .filter({ buildingId: building.id, floorId: floor.id })
+      .filter({ buildingId: building.id, floorId: floor.id, assigned: true })
       .value();
 
     // Add computer in tile at computer's coordinates
