@@ -20,6 +20,16 @@ var DB = {
           name: "Floor 0",
           buildingId: "building-0",
           rows: 20,
+          cols: 10,
+          height: 500,
+          width: 500,
+          floorMap: ""
+        },
+        {
+          id: "floor-1",
+          name: "Floor 1",
+          buildingId: "building-0",
+          rows: 20,
           cols: 30,
           height: 500,
           width: 1000,
@@ -72,7 +82,7 @@ var DB = {
 };
 
 $(document).ready(function() {
-  // localStorage.removeItem("db");
+  localStorage.removeItem("db");
   var adapter = new LocalStorage("db");
   var db = low(adapter);
   DB.init(db);

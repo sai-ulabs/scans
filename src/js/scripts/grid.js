@@ -65,6 +65,7 @@ var Grid = {
         }
       })
       .css("border", "none");
+    // .css("background", "green");
 
     var tileCount = selectedBlockTiles.length;
     newBlockCoordinates.x0 = selectedBlockTiles[0].x;
@@ -306,7 +307,12 @@ var Grid = {
       let computer = computersInFloor[comp];
       let coordinates = computer.coordinates;
       let tile = Grid.getTile(building.id, floor.id, coordinates);
-      let droppableComputer = $(".palette-item");
+
+      let droppableComputer = $(".palette-item-starter")
+        .last()
+        .clone()
+        .css("display", "")
+        .attr("data-location", tile.attr("data-location"));
       let copy = DragDrop.createPaletteItemCopy(droppableComputer);
       tile.append(copy);
     }
