@@ -84,10 +84,15 @@
           <div class="h5">(Drag & Drop)</div>
           <div id="map-palette-container" class="palette map-palette-container center-child">
             <button class="palette-computer computer-style bg-transparent palette-item">
-              <img src="img/computer.png" class="computer-image" />
+              <!-- <img src="img/computer.png" class="computer-image" /> -->
+              <i class="computer-image fa fa-desktop fa-2x"></i>
+            </button>
+            <button class="palette-computer computer-style bg-transparent palette-item">
+              <!-- <img src="img/computer.png" class="computer-image" /> -->
+              <i class="computer-image fa fa-user fa-2x"></i>
             </button>
             <button class="palette-computer-starter computer-style bg-transparent palette-item-starter" style="display:none;">
-              <img src="img/computer.png" class="computer-image" />
+              <i class="computer-image fa fa-desktop fa-2x"></i>
             </button>
           </div>
           <div class="hr w-75"></div>
@@ -96,8 +101,7 @@
         </div>
 
         <div class="container flex-8 center-background bg-warning" style="overflow-y: auto; padding-bottom: 20px;">
-          <div id="building-title" class="h2 text-center building-title m-3">
-
+          <div id="building-title-sdf" class="h2 text-center building-title m-3">
           </div>
           <div class="grid-container">
             <div class="map-grid-container d-flex justify-content-center"></div>
@@ -129,6 +133,7 @@
 
 
   <script src="js/scripts/db.js"></script>
+  <script src="js/scripts/api.js"></script>
   <script src="js/scripts/alerts.js"></script>
   <script src="js/scripts/dragDrop.js"></script>
   <script src="js/scripts/grid.js"></script>

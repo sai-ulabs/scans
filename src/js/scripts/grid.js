@@ -1,6 +1,17 @@
 var Grid = {
   gridContainer: $(".map-grid-container"),
   floorHasImage: false,
+
+  createPersonShape: function(person) {
+    var person = $("<i class='fa fa-user fa-2x'></i>")
+      .css({
+        color: API.getRandomColor()
+      })
+      .attr("data-person", JSON.stringify(person))
+      .clone();
+
+    return person;
+  },
   removeSelectedBorders: function() {
     $(".ui-selected").css("border", "none");
   },
@@ -15,7 +26,8 @@ var Grid = {
       for (var i = blockPart.x0; i <= blockPart.x3; i++) {
         for (var j = blockPart.y0; j <= blockPart.y3; j++) {
           var block = floor.find("[data-tile='" + i + "x" + j + "']").css({
-            border: "none"
+            border: "none",
+            background: "white"
           });
           if (blockType === "division") {
             // Add properties to block if it is a division
@@ -64,8 +76,8 @@ var Grid = {
           floorId = tileLocation.floorId;
         }
       })
-      .css("border", "none");
-    // .css("background", "green");
+      .css("border", "none")
+      .css("background", "white");
 
     var tileCount = selectedBlockTiles.length;
     newBlockCoordinates.x0 = selectedBlockTiles[0].x;
@@ -241,15 +253,17 @@ var Grid = {
 
       for (var col = 0; col < cols; col++) {
         var tile = Grid.createTile(row, col, tileHeight, tileWidth);
-        tile.attr(
-          "data-location",
-          JSON.stringify({
-            buildingId: building.id,
-            floorId: floor.id,
-            x: row,
-            y: col
-          })
-        );
+        tile
+          .attr(
+            "data-location",
+            JSON.stringify({
+              buildingId: building.id,
+              floorId: floor.id,
+              x: row,
+              y: col
+            })
+          )
+          .css("background", "grey");
 
         if (hasBackgroundImg) {
           tile.css({ background: "transparent", border: "none" });
@@ -294,9 +308,10 @@ var Grid = {
   },
   addComputersToFloor: function(building, floor) {
     DragDrop.init();
+
     var computersInFloor = DB.db
       .get("computers")
-      .filter({ buildingId: building.id, floorId: floor.id, assigned: true })
+      .filter({ buildingId: building.id, floorId: floor.id })
       .value();
 
     // Add computer in tile at computer's coordinates
@@ -313,6 +328,16 @@ var Grid = {
       let copy = DragDrop.createPaletteItemCopy(droppableComputer);
       tile.append(copy);
     }
+  },
+  addPeopleToFloor: function() {
+    // For Demo using the hardcoded names
+
+    API.getPeopleLatestLocation().done(function(data) {
+      _.map(data, function(person, i) {
+        var personDiv = Grid.createPersonShape(person);
+        $("body").append(personDiv);
+      });
+    });
   },
   init: function() {
     Grid.getBuildings();
@@ -340,4 +365,5 @@ var Grid = {
 
 $(document).ready(function() {
   Grid.init();
+  Grid.addPeopleToFloor();
 });

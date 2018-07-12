@@ -1,6 +1,7 @@
 var DragDrop = {
   // A flag variable to disable clone if dragging inside grid
   isInsideTile: false,
+  dragStartLocation: null,
   createPaletteItemCopy: function(element) {
     var copy = element.last().clone();
     copy.attr("data-item-type", "computer");
@@ -13,8 +14,6 @@ var DragDrop = {
       // Implement modals
       Alerts.assignOrDeleteComputer().done(
         function(value) {
-          console.log(value);
-
           if (value) {
             $(this).remove();
           }
@@ -22,12 +21,18 @@ var DragDrop = {
       );
     });
 
+    // Save computer in database
+
     copy.draggable({
       containment: ".droppable",
       cancel: false,
       scope: "grid",
       revert: true,
       revertDuration: 10,
+      start: function(ev, ui) {
+        var tileLocation = $(this).attr("data-location");
+        DragDrop.dragStartLocation = JSON.parse(tileLocation);
+      },
       drag: function(ev, ui) {
         DragDrop.isInsideTile = true;
       }
@@ -62,6 +67,7 @@ var DragDrop = {
 
         // Clone the copy of palette-item only if dragging from palette
         var tileLocation = $(this).attr("data-location");
+
         if (!DragDrop.isInsideTile) {
           var copy = DragDrop.createPaletteItemCopy(ui.draggable);
           copy.attr("data-location", tileLocation);
@@ -71,6 +77,19 @@ var DragDrop = {
           draggedItem.attr("data-location", tileLocation);
           $(this).append(draggedItem);
         }
+
+        DB.addComputerToDb(
+          DragDrop.dragStartLocation,
+          JSON.parse(tileLocation)
+        );
+        // DB.db.computers.push({
+        //   buildingId: tileLocation.buildingId,
+        //   floorId: tileLocation.floorId,
+        //   coordinates: {
+        //     x: tileLocation.x,
+        //     y: tileLocation.y
+        //   }
+        // });
       }
     });
   },

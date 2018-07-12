@@ -8,11 +8,11 @@ var DB = {
         {
           id: "building-0",
           name: "Building-0"
-        },
-        {
-          id: "building-1",
-          name: "Building-1"
         }
+        // {
+        //   id: "building-1",
+        //   name: "Building-1"
+        // }
       ],
       floors: [
         {
@@ -20,11 +20,11 @@ var DB = {
           name: "Floor 0",
           buildingId: "building-0",
           rows: 20,
-          cols: 30,
-          height: 500,
-          width: 1000,
+          cols: 20,
+          height: 700,
+          width: 700,
           floorMap: ""
-        },
+        }
         // {
         //   id: "floor-1",
         //   name: "Floor 1",
@@ -35,15 +35,15 @@ var DB = {
         //   width: 1000,
         //   floorMap: ""
         // },
-        {
-          id: "floor-1",
-          name: "Floor 1",
-          buildingId: "building-1",
-          rows: 20,
-          cols: 30,
-          height: 500,
-          width: 1000
-        }
+        // {
+        //   id: "floor-1",
+        //   name: "Floor 1",
+        //   buildingId: "building-1",
+        //   rows: 20,
+        //   cols: 30,
+        //   height: 500,
+        //   width: 1000
+        // }
       ],
       rooms: [
         // {
@@ -55,56 +55,7 @@ var DB = {
         // }
       ],
       divisions: [],
-      computers: [
-        {
-          id: "abhinav-computer",
-          name: "Abhinav's Computer",
-          buildingId: "building-0",
-          floorId: "floor-0",
-          assigned: false
-        },
-        {
-          id: "jamel-computer",
-          name: "Jamel's Computer",
-          buildingId: "building-0",
-          floorId: "floor-0",
-          assigned: false
-        },
-        {
-          id: "pearl-computer",
-          name: "Pearl's Computer",
-          buildingId: "building-0",
-          floorId: "floor-0",
-          assigned: false
-        },
-        {
-          id: "Alex-computer",
-          name: "Alex's Computer",
-          buildingId: "building-0",
-          floorId: "floor-0",
-          assigned: false
-        }
-        // {
-        //   id: "computer-1",
-        //   name: "Computer 1",
-        //   buildingId: "building-0",
-        //   floorId: "floor-0",
-        //   coordinates: {
-        //     x: 4,
-        //     y: 2
-        //   }
-        // },
-        // {
-        //   id: "computer-2",
-        //   name: "Computer 2",
-        //   buildingId: "building-1",
-        //   floorId: "floor-1",
-        //   coordinates: {
-        //     x: 8,
-        //     y: 5
-        //   }
-        // }
-      ]
+      computers: []
     }).write();
   },
   addRoomToDb: function(room) {
@@ -113,18 +64,42 @@ var DB = {
       .push(room)
       .write();
   },
-  addComputerToDb: function(computer) {
+  addComputerToDb: function(oldLocation, newLocation) {
     var computers = DB.db.get("computers");
-    if (computers.find({ id: computer.id })) {
+
+    var newCoordinates = {
+      x: newLocation.x,
+      y: newLocation.y
+    };
+
+    if (computers.find({ coordinates: newCoordinates }).value()) {
       // Update
+      alert("Only one computer per a tile");
+      console.log("Computer Already exists");
     } else {
-      // Create
+      // If old location is null, it's a new computer
+
+      if (oldLocation) {
+        var oldCoordinates = { x: oldLocation.x, y: oldLocation.y };
+        // Remove in old location
+        console.log(oldCoordinates);
+        console.log("Removing");
+
+        computers.remove({ coordinates: oldCoordinates }).write();
+      }
+
+      var newComputer = {
+        buildingId: newLocation.buildingId,
+        floorId: newLocation.floorId,
+        coordinates: newCoordinates
+      };
+      computers.push(newComputer).write();
     }
   },
   getUnassignedComputerList: function() {
     var computers = DB.db
       .get("computers")
-      .filter({ assigned: false })
+      // .filter({ assigned: false })
       .value();
     return computers;
   }
