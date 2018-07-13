@@ -1,7 +1,9 @@
 window.personIndex = 0;
+window.roomId = 0;
 var Grid = {
   gridContainer: $(".map-grid-container"),
   floorHasImage: false,
+  // rooms: {},
 
   createPersonShape: function(person) {
     var color = API.getRandomColor(window.personIndex++);
@@ -54,6 +56,7 @@ var Grid = {
   },
 
   createBlockFromDb: function(blockData, blockType) {
+    var roomId = window.roomId++;
     var bldg = $("[data-building='" + blockData.buildingId + "']");
     var floor = bldg.find("[data-floor='" + blockData.floorId + "']");
     var blockCoordinates = blockData.coordinates;
@@ -70,7 +73,7 @@ var Grid = {
             // Add properties to block if it is a division
             // block.css("background", "gray");
           } else if (blockType === "room") {
-            block.attr("data-tile-type", "room");
+            block.attr("data-tile-type", "room").attr("data-room-id", roomId);
           }
         }
       }
@@ -374,9 +377,14 @@ var Grid = {
     }
   },
   getEmptyTileAroundComputer: function(computer) {
-    var coords = _.find(DB.db.get("computers").value(), {
+    var computer = _.find(DB.db.get("computers").value(), {
       name: computer
-    })["coordinates"];
+    });
+
+    var coords = computer["coordinates"];
+    var roomId = computer["roomId"];
+
+    // var roomId =
 
     // Just in case if all surroundings are occupied, return the last one
     var maxX = coords.x;
@@ -391,17 +399,20 @@ var Grid = {
       wallOccupied.push({ x: tileLocation.x, y: tileLocation.y });
     });
 
-    var maxSearch = 5;
-    for (let radius = 1; radius < maxSearch; radius++) {
-      for (let theta = 0; theta < Math.PI * 2; theta += 0.1) {
+    var maxSearch = 9;
+    for (let radius = 3; radius < maxSearch; radius += 3) {
+      for (let theta = 0; theta < Math.PI * 2; theta += Math.PI / 4) {
         var x = Math.round(Math.cos(theta) * radius + coords.x);
-        var y = Math.round(Math.cos(theta) * radius + coords.y);
+        var y = Math.round(Math.sin(theta) * radius + coords.y);
 
         var allOccupied = computerOccupied.concat(wallOccupied);
         var isOccupied = _.find(allOccupied, { x: x, y: y });
 
         if (!isOccupied && x > 0 && y > 0 && x < 19 && y < 19) {
-          return { x: x, y: y };
+          var domRoomID = $(`[data-tile='${x}x${y}']`).attr("data-room-id");
+          if (Number(domRoomID) === Number(roomId)) {
+            return { x: x, y: y };
+          }
         } else {
           maxX = x;
           maxY = y;
@@ -443,6 +454,8 @@ var Grid = {
         var personIcon = Grid.createPersonShape(person.userName);
 
         var dataTile = `${emptyTile.x}x${emptyTile.y}`;
+
+        console.log(dataTile);
 
         var personTile = $(`[data-tile='${dataTile}']`);
         personTile.append(personIcon);

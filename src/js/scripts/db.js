@@ -70,6 +70,7 @@ var DB = {
           name: "UL-LAPTOP-07",
           buildingId: "building-0",
           floorId: "floor-0",
+          roomId: 0,
           coordinates: {
             x: 9,
             y: 1
@@ -80,6 +81,7 @@ var DB = {
           name: "DESKTOP-C3PEVEC",
           buildingId: "building-0",
           floorId: "floor-0",
+          roomId: 0,
           coordinates: {
             x: 4,
             y: 1
@@ -90,6 +92,7 @@ var DB = {
           name: "UL-BLACK-04",
           buildingId: "building-0",
           floorId: "floor-0",
+          roomId: 0,
           coordinates: {
             x: 4,
             y: 9
@@ -108,6 +111,7 @@ var DB = {
           name: "COOLCAD-SLIM-03",
           buildingId: "building-0",
           floorId: "floor-0",
+          roomId: 0,
           coordinates: {
             x: 2,
             y: 18
@@ -118,6 +122,7 @@ var DB = {
           name: "UL-BLACK-05",
           buildingId: "building-0",
           floorId: "floor-0",
+          roomId: 1,
           coordinates: {
             x: 11,
             y: 18
@@ -128,6 +133,8 @@ var DB = {
           name: "UL-LAPTOP-06",
           buildingId: "building-0",
           floorId: "floor-0",
+          roomId: 1,
+
           coordinates: {
             x: 11,
             y: 10
@@ -154,6 +161,8 @@ var DB = {
           name: "SVP-DESKTOP",
           buildingId: "building-0",
           floorId: "floor-0",
+          roomId: 1,
+
           coordinates: {
             x: 18,
             y: 18
