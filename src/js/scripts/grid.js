@@ -400,24 +400,28 @@ var Grid = {
     });
 
     var maxSearch = 9;
-    for (let radius = 3; radius < maxSearch; radius += 3) {
-      for (let theta = 0; theta < Math.PI * 2; theta += Math.PI / 4) {
-        var x = Math.round(Math.cos(theta) * radius + coords.x);
-        var y = Math.round(Math.sin(theta) * radius + coords.y);
+    for (let i = 0; i < 1000; i++) {
+      var radius = Math.random() * 5 + 1;
+      var theta = Math.random() * 2 * Math.PI;
+      //}
+      //for (let radius = 3; radius < maxSearch; radius += 3) {
+      //for (let theta = 0; theta < Math.PI * 2; theta += Math.PI / 4) {
+      var x = Math.round(Math.cos(theta) * radius + coords.x);
+      var y = Math.round(Math.sin(theta) * radius + coords.y);
 
-        var allOccupied = computerOccupied.concat(wallOccupied);
-        var isOccupied = _.find(allOccupied, { x: x, y: y });
+      var allOccupied = computerOccupied.concat(wallOccupied);
+      var isOccupied = _.find(allOccupied, { x: x, y: y });
 
-        if (!isOccupied && x > 0 && y > 0 && x < 19 && y < 19) {
-          var domRoomID = $(`[data-tile='${x}x${y}']`).attr("data-room-id");
-          if (Number(domRoomID) === Number(roomId)) {
-            return { x: x, y: y };
-          }
-        } else {
-          maxX = x;
-          maxY = y;
+      if (!isOccupied && x > 0 && y > 0 && x < 19 && y < 19) {
+        var domRoomID = $(`[data-tile='${x}x${y}']`).attr("data-room-id");
+        if (Number(domRoomID) === Number(roomId)) {
+          return { x: x, y: y };
         }
+      } else {
+        maxX = x;
+        maxY = y;
       }
+      //}
     }
 
     return { x: maxX, y: maxY };
