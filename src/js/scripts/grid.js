@@ -515,4 +515,5 @@ var Grid = {
 
 $(document).ready(function () {
   Grid.init();
+  Grid.updateMap();
 });
