@@ -1,15 +1,51 @@
+window.personIndex = 0;
 var Grid = {
   gridContainer: $(".map-grid-container"),
   floorHasImage: false,
 
   createPersonShape: function(person) {
+    var color = API.getRandomColor(window.personIndex++);
+    // var circle = $("<span></span>").addClass("circle-person");
+    // circle
+    //   .css({
+    //     height: 100,
+    //     width: 100,
+    //     borderRadius: "50%",
+    //     border: `2px solid ${color}`,
+    //     background: "transparent"
+    //   })
+
     var personDiv = $("<i class='fa fa-user fa-2x'></i>")
-      .css({ color: API.getRandomColor() })
       .attr("data-type", "person")
       .attr("data-person", person)
       .attr("data-toggle", "tooltip")
       .attr("title", person)
+      .css({ color: color })
+      .addClass("faa-burst animated")
       .clone();
+
+    var legendRect = $("<div></div>").css({
+      display: "inline-block",
+      height: 20,
+      width: 20,
+      borderRadius: "50%",
+      background: color,
+      marginRight: 10
+    });
+
+    var name = $("<span></span>")
+      .text(person)
+      .css({
+        color: color
+      });
+
+    $(".people-legend").append(
+      $("<p></p>")
+        .append(legendRect)
+        .append(name)
+    );
+
+    // return circle.clone().append(personDiv);
 
     return personDiv;
   },
@@ -364,7 +400,7 @@ var Grid = {
         var allOccupied = computerOccupied.concat(wallOccupied);
         var isOccupied = _.find(allOccupied, { x: x, y: y });
 
-        if (!isOccupied) {
+        if (!isOccupied && x > 0 && y > 0 && x < 19 && y < 19) {
           return { x: x, y: y };
         } else {
           maxX = x;
@@ -373,48 +409,54 @@ var Grid = {
       }
     }
 
-    // return { x: maxX, y: maxY };
+    return { x: maxX, y: maxY };
   },
   clearPreviousPeopleFromMap: function() {
     $("[data-type='person'").remove();
-    console.log(DB.defaultOccupiedTiles.slice());
+    $(".people-legend").empty();
+
+    window.personIndex = 0;
 
     DB.db.set("occupiedTiles", []).write();
     DB.db.set("occupiedTiles", DB.defaultOccupiedTiles.slice()).write();
-
-    // .get("occupiedTiles")
-    // .assign(DB.defaultOccupiedTiles.slice())
-    // .write();
   },
+  updateMap: function() {
+    // Remove previous people and occupied titles
+    Grid.clearPreviousPeopleFromMap();
+
+    var endDate = $("#endDate").val();
+
+    API.getPeopleLatestLocation(endDate).done(function(data) {
+      _.map(data, function(person, i) {
+        var computer = person.computerName;
+        var emptyTile = Grid.getEmptyTileAroundComputer(computer);
+
+        // console.log(emptyTile);
+
+        // Add to occupied tiles before adding person
+
+        DB.db
+          .get("occupiedTiles")
+          .push(emptyTile)
+          .write();
+
+        var personIcon = Grid.createPersonShape(person.userName);
+
+        var dataTile = `${emptyTile.x}x${emptyTile.y}`;
+
+        var personTile = $(`[data-tile='${dataTile}']`);
+        personTile.append(personIcon);
+
+        // var cX = $(personTile);
+        // var cY = personTile.clientY;
+      });
+    });
+  },
+
   addPeopleToFloor: function() {
     // For Demo using the hardcoded names
     $("#getLocations").on("click", function() {
-      // Remove previous people and occupied titles
-      Grid.clearPreviousPeopleFromMap();
-
-      var endDate = $("#endDatePicker").val();
-
-      API.getPeopleLatestLocation(endDate).done(function(data) {
-        _.map(data, function(person, i) {
-          var computer = person.computerName;
-          var emptyTile = Grid.getEmptyTileAroundComputer(computer);
-
-          // console.log(emptyTile);
-
-          // Add to occupied tiles before adding person
-
-          DB.db
-            .get("occupiedTiles")
-            .push(emptyTile)
-            .write();
-
-          var personIcon = Grid.createPersonShape(person.userName);
-
-          var dataTile = `${emptyTile.x}x${emptyTile.y}`;
-
-          $(`[data-tile='${dataTile}']`).append(personIcon);
-        });
-      });
+      Grid.updateMap();
     });
   },
   init: function() {
@@ -444,6 +486,5 @@ var Grid = {
 };
 
 $(document).ready(function() {
-  $('[data-toggle="tooltip"]').tooltip();
   Grid.init();
 });

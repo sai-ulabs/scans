@@ -64,4 +64,42 @@ body {
   background: rgba(205, 213, 224, 0.2);
 }
 
+/* WAVE */
+
+@-webkit-keyframes burst {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    -webkit-transform: scale(1.8);
+    transform: scale(1.8);
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes burst {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    -webkit-transform: scale(1.8);
+    -ms-transform: scale(1.8);
+    transform: scale(1.8);
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.faa-burst.animated,
+.faa-burst.animated-hover:hover,
+.faa-parent.animated-hover:hover > .faa-burst {
+  -webkit-animation: burst 3s infinite linear;
+  animation: burst 3s infinite linear;
+}
+
 /*# sourceMappingURL=map-styles.css.map */

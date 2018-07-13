@@ -16,6 +16,8 @@
   <link rel="stylesheet" href="css/tools/bootstrap-datetimepicker.min.css">
   <!-- <link rel="stylesheet" href="css/tools/jquery.contextMenu.min.css"> -->
 
+  <link rel="stylesheet" href="css/tools/font-awesome-animation.min.css">
+
   <link rel="stylesheet" href="css/map-styles.css">
   <link rel="stylesheet" href="css/map-layout.css">
 
@@ -73,10 +75,13 @@
         <select name="building-selector" id="building-selector" class="selectpicker" data-live-search="true">
         </select>
         <div class="form-inline">
-          <div class='input-group date'>
-            <input type='text' class="form-control" id='endDatePicker' />
+          <div class='input-group date' id='endDatePicker'>
+            <input type='text' class="form-control" id="endDate" />
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar"></span>
+              <span class="increment glyphicon glyphicon-plus" style="padding-left: 10px;"></span>
+              <span class="decrement glyphicon glyphicon-minus" style="padding-left: 10px;"></span>
+
             </span>
           </div>
         </div>
@@ -116,8 +121,11 @@
           </div>
           <div class="grid-container">
             <div class="map-grid-container d-flex justify-content-center"></div>
+            <div class="container people-legend d-flex justify-content-spacearound"></div>
           </div>
         </div>
+
+
         <!-- <div class="sidebar-right flex-1 border-left d-flex flex-direction-column align-items-center">
           <button id="btnCreateRoom" class="btn btn-lg btn-default w-75 m-2">Create Room</button>
           <button id="btnRemoveBorders" class="btn btn-lg btn-default w-75 m-2">Cut Selection</button>
@@ -137,10 +145,6 @@
   <script src="js/tools/LocalStorage.min.js"></script>
   <script src="js/tools/bootstrap-select.min.js"></script>
   <script src="js/tools/bootstrap-datetimepicker.min.js"></script>
-  <!-- <script src="js/tools/photoswipe.min.js"></script>
-  <script src="js/tools/photoswipe-ui-default.min.js"></script> -->
-  <!-- <script src="js/tools/jquery.ui.position.min.js"></script>
-    <script src="js/tools/jquery.contextMenu.min.js"></script> -->
 
 
 
@@ -148,23 +152,14 @@
   <!-- WARNING: DO NOT CHANGE THE ORDER OF THE SCRIPTS -->
 
 
-  <script src="js/scripts/init.js"></script>
+  <script src="js/scripts/loads.js"></script>
   <script src="js/scripts/db.js"></script>
   <script src="js/scripts/alerts.js"></script>
   <script src="js/scripts/dragDrop.js"></script>
   <script src="js/scripts/grid.js"></script>
   <script src="js/scripts/api.js"></script>
   <script src="js/scripts/palette.js"></script>
-  <!-- <script src="js/globals.js"></script>
-  <script src="js/storage.js"></script>
-  <script src="js/api.js"></script>
-  <script src="js/grid.js"></script>
-  <script src="js/selectables.js"></script>
-  <script src="js/modalUtils.js"></script>
-  <script src="js/halberds.js"></script>
-  <script src="js/dragDrop.js"></script>
-  <script src="js/test.js"></script> -->
-
+  <script src="js/scripts/init.js"></script>
 
 </body>
 

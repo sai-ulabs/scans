@@ -25,13 +25,23 @@ var API = {
     return dfd.promise();
   },
 
-  getRandomColor: function() {
-    var letters = "0123456789ABCDEF";
-    var color = "#";
-    for (var i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
+  getRandomColor: function(i) {
+    var colors = [
+      "maroon",
+      "red",
+      "orange",
+      "olive",
+      "green",
+      "purple",
+      "fuchsia",
+      "lime",
+      "teal",
+      "aqua",
+      "blue",
+      "navy",
+      "black"
+    ];
+    return colors[i];
   },
   getPeopleLatestLocation: function(
     endDate = moment().format("MM/DD/YYYY HH:mm")
