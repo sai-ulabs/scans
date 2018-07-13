@@ -4,10 +4,11 @@ var Grid = {
 
   createPersonShape: function(person) {
     var personDiv = $("<i class='fa fa-user fa-2x'></i>")
-      .css({
-        color: API.getRandomColor()
-      })
-      .attr("data-person", JSON.stringify(person))
+      .css({ color: API.getRandomColor() })
+      .attr("data-type", "person")
+      .attr("data-person", person)
+      .attr("data-toggle", "tooltip")
+      .attr("title", person)
       .clone();
 
     return personDiv;
@@ -32,6 +33,8 @@ var Grid = {
           if (blockType === "division") {
             // Add properties to block if it is a division
             // block.css("background", "gray");
+          } else if (blockType === "room") {
+            block.attr("data-tile-type", "room");
           }
         }
       }
@@ -44,7 +47,7 @@ var Grid = {
   createDivisionFromDb: function(divisionData) {
     Grid.createBlockFromDb(divisionData, "division");
   },
-  createBlockFromSelection: function() {
+  createBlockFromSelection: function(blockType = null) {
     var newBlock = {};
     var newBlockCoordinates = {
       x0: 0,
@@ -66,6 +69,9 @@ var Grid = {
       })
       .each(function() {
         var tile = $(this);
+        if (blockType === "room") {
+          tile.attr("data-tile-type", "room");
+        }
         var tileLocation = JSON.parse(tile.attr("data-location"));
         // console.log(tileLocation);
         selectedBlockTiles.push({ x: tileLocation.x, y: tileLocation.y });
@@ -100,7 +106,7 @@ var Grid = {
       .write();
   },
   createRoomFromSelection: function() {
-    var newRoom = Object.assign({}, Grid.createBlockFromSelection());
+    var newRoom = Object.assign({}, Grid.createBlockFromSelection("room"));
 
     Alerts.inputRoom()
       .done(function(roomName) {
@@ -136,7 +142,7 @@ var Grid = {
   createTile: function(i, j, tileHeight, tileWidth) {
     var d = $(`<div></div>`);
     d.attr("data-tile", i + "x" + j)
-      // .attr("data-tile-type", "wall")
+      .attr("data-tile-type", "wall")
       .css({ width: tileWidth, height: tileHeight })
       .addClass("ui-widget-content droppable-tile");
 
@@ -327,11 +333,11 @@ var Grid = {
         .css("display", "")
         .attr("data-location", tile.attr("data-location"));
       let copy = DragDrop.createPaletteItemCopy(droppableComputer);
+      copy.attr("data-toggle", "tooltip").attr("title", computer.name);
       tile.append(copy);
     }
   },
   getEmptyTileAroundComputer: function(computer) {
-    console.log(computer);
     var coords = _.find(DB.db.get("computers").value(), {
       name: computer
     })["coordinates"];
@@ -340,15 +346,24 @@ var Grid = {
     var maxX = coords.x;
     var maxY = coords.y;
 
+    var computerOccupied = DB.db.get("occupiedTiles").value();
+
+    var wallOccupied = [];
+    $(`[data-tile-type='wall']`).each(function() {
+      var tile = $(this);
+      var tileLocation = JSON.parse(tile.attr("data-location"));
+      wallOccupied.push({ x: tileLocation.x, y: tileLocation.y });
+    });
+
     var maxSearch = 5;
     for (let radius = 1; radius < maxSearch; radius++) {
       for (let theta = 0; theta < Math.PI * 2; theta += 0.1) {
         var x = Math.round(Math.cos(theta) * radius + coords.x);
         var y = Math.round(Math.cos(theta) * radius + coords.y);
 
-        var occupiedTiles = DB.db.get("occupiedTiles").value();
+        var allOccupied = computerOccupied.concat(wallOccupied);
+        var isOccupied = _.find(allOccupied, { x: x, y: y });
 
-        var isOccupied = _.find(occupiedTiles, { x: x, y: y });
         if (!isOccupied) {
           return { x: x, y: y };
         } else {
@@ -358,18 +373,33 @@ var Grid = {
       }
     }
 
-    return { x: maxX, y: maxY };
+    // return { x: maxX, y: maxY };
+  },
+  clearPreviousPeopleFromMap: function() {
+    $("[data-type='person'").remove();
+    console.log(DB.defaultOccupiedTiles.slice());
+
+    DB.db.set("occupiedTiles", []).write();
+    DB.db.set("occupiedTiles", DB.defaultOccupiedTiles.slice()).write();
+
+    // .get("occupiedTiles")
+    // .assign(DB.defaultOccupiedTiles.slice())
+    // .write();
   },
   addPeopleToFloor: function() {
     // For Demo using the hardcoded names
     $("#getLocations").on("click", function() {
+      // Remove previous people and occupied titles
+      Grid.clearPreviousPeopleFromMap();
+
       var endDate = $("#endDatePicker").val();
 
       API.getPeopleLatestLocation(endDate).done(function(data) {
         _.map(data, function(person, i) {
           var computer = person.computerName;
           var emptyTile = Grid.getEmptyTileAroundComputer(computer);
-          console.log("Empty Tile: ", emptyTile);
+
+          // console.log(emptyTile);
 
           // Add to occupied tiles before adding person
 
@@ -379,17 +409,11 @@ var Grid = {
             .write();
 
           var personIcon = Grid.createPersonShape(person.userName);
-          var dataTile = `${emptyTile.x}x${emptyTile.y}`;
 
-          console.log(`[data-tile='${dataTile}']`);
+          var dataTile = `${emptyTile.x}x${emptyTile.y}`;
 
           $(`[data-tile='${dataTile}']`).append(personIcon);
         });
-
-        // _.map(data, function(person, i) {
-        //   var personDiv = Grid.createPersonShape(person);
-        //   $("body").append(personDiv);
-        // });
       });
     });
   },
@@ -420,5 +444,6 @@ var Grid = {
 };
 
 $(document).ready(function() {
+  $('[data-toggle="tooltip"]').tooltip();
   Grid.init();
 });

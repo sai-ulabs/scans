@@ -1,27 +1,19 @@
 var DB = {
   db: null,
-  // occupiedTiles: [
-  //   { x: 9, y: 1 },
-  //   { x: 4, y: 1 },
-  //   { x: 4, y: 9 },
-  //   { x: 2, y: 18 },
-  //   { x: 11, y: 18 },
-  //   { x: 11, y: 10 },
-  //   { x: 18, y: 18 }
-  // ],
+  defaultOccupiedTiles: [
+    { x: 9, y: 1 },
+    { x: 4, y: 1 },
+    { x: 4, y: 9 },
+    { x: 2, y: 18 },
+    { x: 11, y: 18 },
+    { x: 11, y: 10 },
+    { x: 18, y: 18 }
+  ],
   init: function(db) {
     DB.db = db;
     db.defaults({
       userId: "0000",
-      occupiedTiles: [
-        { x: 9, y: 1 },
-        { x: 4, y: 1 },
-        { x: 4, y: 9 },
-        { x: 2, y: 18 },
-        { x: 11, y: 18 },
-        { x: 11, y: 10 },
-        { x: 18, y: 18 }
-      ],
+      occupiedTiles: DB.defaultOccupiedTiles.slice(),
       buildings: [
         {
           id: "building-0",
@@ -195,8 +187,8 @@ var DB = {
       if (oldLocation) {
         var oldCoordinates = { x: oldLocation.x, y: oldLocation.y };
         // Remove in old location
-        console.log(oldCoordinates);
-        console.log("Removing");
+        // console.log(oldCoordinates);
+        // console.log("Removing");
 
         computers.remove({ coordinates: oldCoordinates }).write();
       }
