@@ -20,7 +20,30 @@ var GridUtils = {
         });
 
         window.tethers.push(titleTether);
-    }
+    },
+    startScanning: function () {
+
+        Grid.updateMap();
+        window.mapInterval = setInterval(function () {
+            Grid.updateMap();
+        }, 15 * 60 * 1000);
+
+        $("#startScanning").prop("disabled", true);
+        $("#stopScanning").prop("disabled", false);
+
+
+        console.log("Scanning Started");
+
+    },
+    stopScanning: function () {
+        if (window.mapInterval) {
+            clearInterval(window.mapInterval);
+            $("#stopScanning").prop("disabled", true);
+            $("#startScanning").prop("disabled", false);
+
+            console.log("Scanning Stopped");
+        }
+    },
 }
 
 
@@ -43,3 +66,4 @@ $("#toggleNames").on('click', function () {
         }
     })
 })
+

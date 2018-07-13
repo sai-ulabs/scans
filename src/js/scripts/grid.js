@@ -483,8 +483,8 @@ var Grid = {
 
   addPeopleToFloor: function () {
     // For Demo using the hardcoded names
-    $("#getLocations").on("click", function () {
-      Grid.updateMap();
+    $("#startScanning").on("click", function () {
+      GridUtils.startScanning();
     });
   },
   init: function () {
@@ -515,5 +515,8 @@ var Grid = {
 
 $(document).ready(function () {
   Grid.init();
-  Grid.updateMap();
+
+
+  GridUtils.startScanning();
+
 });

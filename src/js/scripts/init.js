@@ -23,3 +23,18 @@ $(".decrement").on("click", function () {
   );
   Grid.updateMap();
 });
+
+
+
+
+
+$("#stopScanning").on("click", function () {
+  if (window.mapInterval) {
+    clearInterval(window.mapInterval);
+    $("#stopScanning").prop("disabled", true);
+    $("#startScanning").prop("disabled", false);
+
+    console.log("Scanning Stopped");
+
+  }
+})
