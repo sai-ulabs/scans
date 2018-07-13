@@ -1,12 +1,14 @@
 window.personIndex = 0;
 window.roomId = 0;
+window.personColor = "";
 var Grid = {
   gridContainer: $(".map-grid-container"),
   floorHasImage: false,
   // rooms: {},
 
-  createPersonShape: function(person) {
+  createPersonShape: function (person) {
     var color = API.getRandomColor(window.personIndex++);
+    window.personColor = color;
     // var circle = $("<span></span>").addClass("circle-person");
     // circle
     //   .css({
@@ -25,6 +27,8 @@ var Grid = {
       .css({ color: color })
       .addClass("faa-burst animated")
       .clone();
+
+
 
     var legendRect = $("<div></div>").css({
       display: "inline-block",
@@ -51,16 +55,16 @@ var Grid = {
 
     return personDiv;
   },
-  removeSelectedBorders: function() {
+  removeSelectedBorders: function () {
     $(".ui-selected").css("border", "none");
   },
 
-  createBlockFromDb: function(blockData, blockType) {
+  createBlockFromDb: function (blockData, blockType) {
     var roomId = window.roomId++;
     var bldg = $("[data-building='" + blockData.buildingId + "']");
     var floor = bldg.find("[data-floor='" + blockData.floorId + "']");
     var blockCoordinates = blockData.coordinates;
-    blockCoordinates.forEach(function(blockPart, i) {
+    blockCoordinates.forEach(function (blockPart, i) {
       var rows = parseInt(blockPart.x3 - blockPart.x0);
       var cols = parseInt(blockPart.y3 - blockPart.y0);
       for (var i = blockPart.x0; i <= blockPart.x3; i++) {
@@ -79,14 +83,14 @@ var Grid = {
       }
     });
   },
-  createRoomFromDb: function(roomData) {
+  createRoomFromDb: function (roomData) {
     Grid.createBlockFromDb(roomData, "room");
   },
 
-  createDivisionFromDb: function(divisionData) {
+  createDivisionFromDb: function (divisionData) {
     Grid.createBlockFromDb(divisionData, "division");
   },
-  createBlockFromSelection: function(blockType = null) {
+  createBlockFromSelection: function (blockType = null) {
     var newBlock = {};
     var newBlockCoordinates = {
       x0: 0,
@@ -101,12 +105,12 @@ var Grid = {
     var selectedBlockTiles = [];
     // Get coordinates of selected including floor and building
     $(".ui-selected")
-      .filter(function() {
+      .filter(function () {
         // Check if its a row and filter it out
         var attr = $(this).attr("data-row");
         return typeof attr === typeof undefined || attr === false;
       })
-      .each(function() {
+      .each(function () {
         var tile = $(this);
         if (blockType === "room") {
           tile.attr("data-tile-type", "room");
@@ -137,18 +141,18 @@ var Grid = {
     return newBlock;
   },
 
-  createDivisionFromSelection: function() {
+  createDivisionFromSelection: function () {
     var newDivision = Object.assign({}, Grid.createBlockFromSelection());
     DB.db
       .get("divisions")
       .push(newDivision)
       .write();
   },
-  createRoomFromSelection: function() {
+  createRoomFromSelection: function () {
     var newRoom = Object.assign({}, Grid.createBlockFromSelection("room"));
 
     Alerts.inputRoom()
-      .done(function(roomName) {
+      .done(function (roomName) {
         var roomId = roomName
           .toLowerCase()
           .replace(/\s/g, "-")
@@ -161,14 +165,14 @@ var Grid = {
 
         DB.addRoomToDb(newRoom);
       })
-      .catch(function(err) {
+      .catch(function (err) {
         Alerts.error(err);
       });
   },
-  getBuildings: function() {
+  getBuildings: function () {
     var buildings = DB.db.get("buildings").value();
 
-    buildings.forEach(function(building, index) {
+    buildings.forEach(function (building, index) {
       // Add building to builder page's building selector
       $("#building-selector").append(
         $("<option>", {
@@ -178,7 +182,7 @@ var Grid = {
       );
     });
   },
-  createTile: function(i, j, tileHeight, tileWidth) {
+  createTile: function (i, j, tileHeight, tileWidth) {
     var d = $(`<div></div>`);
     d.attr("data-tile", i + "x" + j)
       .attr("data-tile-type", "wall")
@@ -188,7 +192,7 @@ var Grid = {
     // $(`#row-${i}`).append(d);
     return d;
   },
-  createRow: function(i, rowHeight, rowWidth) {
+  createRow: function (i, rowHeight, rowWidth) {
     var row = $(`<div></div>`);
     row
       .attr("id", `row-${i}`)
@@ -201,7 +205,7 @@ var Grid = {
     // $(".map-grid-container").append(row);
     return row;
   },
-  createGridForBuilding: function(buildingId) {
+  createGridForBuilding: function (buildingId) {
     var building = DB.db
       .get("buildings")
       .filter({ id: buildingId })
@@ -216,7 +220,7 @@ var Grid = {
     Grid.gridContainer.append(buildingDiv);
 
     // Now in the building build the floors
-    floorsInBuilding.forEach(function(floor, index) {
+    floorsInBuilding.forEach(function (floor, index) {
       // Start Floor Buliding
       var floorDiv = Grid.createGridForFloor(building, floor, buildingDiv);
 
@@ -246,7 +250,7 @@ var Grid = {
       filter: ".droppable-tile"
     });
   },
-  createGridForFloor: function(building, floor) {
+  createGridForFloor: function (building, floor) {
     // for (var flr = 0; flr < floors.value().length; flr++) {
     //   var floor = floors.value()[flr];
     var floorName = floor.name;
@@ -283,7 +287,7 @@ var Grid = {
         background: hasBackgroundImg
           ? `url('/src/img/demo-room.png')`
           : // `url('https://picsum.photos/200/100/?random')`
-            "white",
+          "white",
         "background-repeat": "no-repeat",
         // "background-size": "cover",
         "background-position": "center"
@@ -321,7 +325,7 @@ var Grid = {
 
     return floorDiv;
   },
-  createRoomsForFloor: function(building, floor) {
+  createRoomsForFloor: function (building, floor) {
     // Get rooms in the floor on this buliding
     var rooms = DB.db.get("rooms").filter({
       buildingId: building.id,
@@ -333,7 +337,7 @@ var Grid = {
       Grid.createRoomFromDb(roomData);
     }
   },
-  createDivisionsForFloor: function(building, floor) {
+  createDivisionsForFloor: function (building, floor) {
     var divisions = DB.db
       .get("divisions")
       .filter({ buildingId: building.id, floorId: floor.id });
@@ -343,7 +347,7 @@ var Grid = {
       Grid.createDivisionFromDb(divisionData);
     }
   },
-  getTile: function(buildingId, floorId, coordinates) {
+  getTile: function (buildingId, floorId, coordinates) {
     var building = $(`[data-building='${buildingId}']`);
 
     var floor = building.find(`[data-floor='${floorId}']`);
@@ -352,7 +356,7 @@ var Grid = {
 
     return tile;
   },
-  addComputersToFloor: function(building, floor) {
+  addComputersToFloor: function (building, floor) {
     DragDrop.init();
 
     var computersInFloor = DB.db
@@ -376,7 +380,7 @@ var Grid = {
       tile.append(copy);
     }
   },
-  getEmptyTileAroundComputer: function(computer) {
+  getEmptyTileAroundComputer: function (computer) {
     var computer = _.find(DB.db.get("computers").value(), {
       name: computer
     });
@@ -393,7 +397,7 @@ var Grid = {
     var computerOccupied = DB.db.get("occupiedTiles").value();
 
     var wallOccupied = [];
-    $(`[data-tile-type='wall']`).each(function() {
+    $(`[data-tile-type='wall']`).each(function () {
       var tile = $(this);
       var tileLocation = JSON.parse(tile.attr("data-location"));
       wallOccupied.push({ x: tileLocation.x, y: tileLocation.y });
@@ -426,23 +430,24 @@ var Grid = {
 
     return { x: maxX, y: maxY };
   },
-  clearPreviousPeopleFromMap: function() {
+  clearPreviousPeopleFromMap: function () {
     $("[data-type='person'").remove();
     $(".people-legend").empty();
+    $(".floating-tags").empty();
 
     window.personIndex = 0;
 
     DB.db.set("occupiedTiles", []).write();
     DB.db.set("occupiedTiles", DB.defaultOccupiedTiles.slice()).write();
   },
-  updateMap: function() {
+  updateMap: function () {
     // Remove previous people and occupied titles
     Grid.clearPreviousPeopleFromMap();
 
     var endDate = $("#endDate").val();
 
-    API.getPeopleLatestLocation(endDate).done(function(data) {
-      _.map(data, function(person, i) {
+    API.getPeopleLatestLocation(endDate).done(function (data) {
+      _.map(data, function (person, i) {
         var computer = person.computerName;
         var emptyTile = Grid.getEmptyTileAroundComputer(computer);
 
@@ -459,10 +464,16 @@ var Grid = {
 
         var dataTile = `${emptyTile.x}x${emptyTile.y}`;
 
-        console.log(dataTile);
 
-        var personTile = $(`[data-tile='${dataTile}']`);
+        var personTileSelector = `[data-tile='${dataTile}']`;
+        var personTile = $(personTileSelector);
         personTile.append(personIcon);
+
+        GridUtils.attachFloatingTitle({
+          title: person.userName,
+          element: personTile,
+          color: window.personColor
+        });
 
         // var cX = $(personTile);
         // var cY = personTile.clientY;
@@ -470,17 +481,17 @@ var Grid = {
     });
   },
 
-  addPeopleToFloor: function() {
+  addPeopleToFloor: function () {
     // For Demo using the hardcoded names
-    $("#getLocations").on("click", function() {
+    $("#getLocations").on("click", function () {
       Grid.updateMap();
     });
   },
-  init: function() {
+  init: function () {
     Grid.getBuildings();
 
     // Add change listener for the building to create that building
-    $("#building-selector").on("change", function(e) {
+    $("#building-selector").on("change", function (e) {
       // Clear the center building container when building is changed
       $("#building-title").text($("#building-selector option:selected").text());
       Grid.gridContainer.empty();
@@ -502,6 +513,6 @@ var Grid = {
   }
 };
 
-$(document).ready(function() {
+$(document).ready(function () {
   Grid.init();
 });

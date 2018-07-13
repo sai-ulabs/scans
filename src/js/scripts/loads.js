@@ -1,1 +1,3 @@
+
 $('[data-toggle="tooltip"]').tooltip();
+

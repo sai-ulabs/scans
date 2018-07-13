@@ -14,7 +14,8 @@
   <link rel="stylesheet" href="css/tools/jquery-ui.min.css">
   <link rel="stylesheet" href="css/tools/bootstrap-select.min.css">
   <link rel="stylesheet" href="css/tools/bootstrap-datetimepicker.min.css">
-  <!-- <link rel="stylesheet" href="css/tools/jquery.contextMenu.min.css"> -->
+  <link rel="stylesheet" href="css/tools/tether.min.css">
+  <link rel="stylesheet" href="css/tools/tether-theme-basic.min.css">
 
   <link rel="stylesheet" href="css/tools/font-awesome-animation.min.css">
 
@@ -86,6 +87,11 @@
           </div>
         </div>
         <button class="btn btn-success" id="getLocations">Get Locations</button>
+
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" class="" id="toggleNames" checked />Names</label>
+        </div>
         <!-- <button class="btn btn-success">Done</button> -->
       </div>
       <div class="droppable content-space d-flex flex-direction-row justify-content-spacebetween flex-9">
@@ -126,14 +132,19 @@
         </div>
 
 
+
+
         <!-- <div class="sidebar-right flex-1 border-left d-flex flex-direction-column align-items-center">
           <button id="btnCreateRoom" class="btn btn-lg btn-default w-75 m-2">Create Room</button>
           <button id="btnRemoveBorders" class="btn btn-lg btn-default w-75 m-2">Cut Selection</button>
         </div> -->
       </div>
     </div>
+    <div class="floating-tags">
+    </div>
   </div>
 
+  <!-- WARNING: DO NOT CHANGE THE ORDER OF THE SCRIPTS -->
 
   <script src="js/tools/sweetalert2.js"></script>
   <script src="js/tools/jquery-3.3.1.min.js"></script>
@@ -145,6 +156,7 @@
   <script src="js/tools/LocalStorage.min.js"></script>
   <script src="js/tools/bootstrap-select.min.js"></script>
   <script src="js/tools/bootstrap-datetimepicker.min.js"></script>
+  <script src="js/tools/tether.min.js"></script>
 
 
 
@@ -156,6 +168,7 @@
   <script src="js/scripts/db.js"></script>
   <script src="js/scripts/alerts.js"></script>
   <script src="js/scripts/dragDrop.js"></script>
+  <script src="js/scripts/gridUtils.js"></script>
   <script src="js/scripts/grid.js"></script>
   <script src="js/scripts/api.js"></script>
   <script src="js/scripts/palette.js"></script>
