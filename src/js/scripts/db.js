@@ -1,9 +1,27 @@
 var DB = {
   db: null,
+  // occupiedTiles: [
+  //   { x: 9, y: 1 },
+  //   { x: 4, y: 1 },
+  //   { x: 4, y: 9 },
+  //   { x: 2, y: 18 },
+  //   { x: 11, y: 18 },
+  //   { x: 11, y: 10 },
+  //   { x: 18, y: 18 }
+  // ],
   init: function(db) {
     DB.db = db;
     db.defaults({
       userId: "0000",
+      occupiedTiles: [
+        { x: 9, y: 1 },
+        { x: 4, y: 1 },
+        { x: 4, y: 9 },
+        { x: 2, y: 18 },
+        { x: 11, y: 18 },
+        { x: 11, y: 10 },
+        { x: 18, y: 18 }
+      ],
       buildings: [
         {
           id: "building-0",
@@ -55,7 +73,102 @@ var DB = {
         // }
       ],
       divisions: [],
-      computers: []
+      computers: [
+        {
+          name: "UL-LAPTOP-07",
+          buildingId: "building-0",
+          floorId: "floor-0",
+          coordinates: {
+            x: 9,
+            y: 1
+          },
+          places: [{ x: 9, y: 3 }, { x: 8, y: 4 }]
+        },
+        {
+          name: "DESKTOP-C3PEVEC",
+          buildingId: "building-0",
+          floorId: "floor-0",
+          coordinates: {
+            x: 4,
+            y: 1
+          },
+          places: { x: 4, y: 3 }
+        },
+        {
+          name: "UL-BLACK-04",
+          buildingId: "building-0",
+          floorId: "floor-0",
+          coordinates: {
+            x: 4,
+            y: 9
+          },
+          places: { x: 4, y: 7 }
+        },
+        // {
+        //   buildingId: "building-0",
+        //   floorId: "floor-0",
+        //   coordinates: {
+        //     x: 4,
+        //     y: 10
+        //   }
+        // },
+        {
+          name: "COOLCAD-SLIM-03",
+          buildingId: "building-0",
+          floorId: "floor-0",
+          coordinates: {
+            x: 2,
+            y: 18
+          },
+          places: { x: 3, y: 16 }
+        },
+        {
+          name: "UL-BLACK-05",
+          buildingId: "building-0",
+          floorId: "floor-0",
+          coordinates: {
+            x: 11,
+            y: 18
+          },
+          places: { x: 12, y: 16 }
+        },
+        {
+          name: "UL-LAPTOP-06",
+          buildingId: "building-0",
+          floorId: "floor-0",
+          coordinates: {
+            x: 11,
+            y: 10
+          },
+          places: { x: 13, y: 10 }
+        },
+        // {
+        //   buildingId: "building-0",
+        //   floorId: "floor-0",
+        //   coordinates: {
+        //     x: 18,
+        //     y: 11
+        //   }
+        // },
+        // {
+        //   buildingId: "building-0",
+        //   floorId: "floor-0",
+        //   coordinates: {
+        //     x: 18,
+        //     y: 1
+        //   }
+        // },
+        {
+          name: "SVP-DESKTOP",
+          buildingId: "building-0",
+          floorId: "floor-0",
+          coordinates: {
+            x: 18,
+            y: 18
+          },
+          places: { x: 16, y: 16 }
+        }
+      ]
     }).write();
   },
   addRoomToDb: function(room) {

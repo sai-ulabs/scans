@@ -3,14 +3,14 @@ var Grid = {
   floorHasImage: false,
 
   createPersonShape: function(person) {
-    var person = $("<i class='fa fa-user fa-2x'></i>")
+    var personDiv = $("<i class='fa fa-user fa-2x'></i>")
       .css({
         color: API.getRandomColor()
       })
       .attr("data-person", JSON.stringify(person))
       .clone();
 
-    return person;
+    return personDiv;
   },
   removeSelectedBorders: function() {
     $(".ui-selected").css("border", "none");
@@ -136,6 +136,7 @@ var Grid = {
   createTile: function(i, j, tileHeight, tileWidth) {
     var d = $(`<div></div>`);
     d.attr("data-tile", i + "x" + j)
+      // .attr("data-tile-type", "wall")
       .css({ width: tileWidth, height: tileHeight })
       .addClass("ui-widget-content droppable-tile");
 
@@ -329,13 +330,66 @@ var Grid = {
       tile.append(copy);
     }
   },
+  getEmptyTileAroundComputer: function(computer) {
+    console.log(computer);
+    var coords = _.find(DB.db.get("computers").value(), {
+      name: computer
+    })["coordinates"];
+
+    // Just in case if all surroundings are occupied, return the last one
+    var maxX = coords.x;
+    var maxY = coords.y;
+
+    var maxSearch = 5;
+    for (let radius = 1; radius < maxSearch; radius++) {
+      for (let theta = 0; theta < Math.PI * 2; theta += 0.1) {
+        var x = Math.round(Math.cos(theta) * radius + coords.x);
+        var y = Math.round(Math.cos(theta) * radius + coords.y);
+
+        var occupiedTiles = DB.db.get("occupiedTiles").value();
+
+        var isOccupied = _.find(occupiedTiles, { x: x, y: y });
+        if (!isOccupied) {
+          return { x: x, y: y };
+        } else {
+          maxX = x;
+          maxY = y;
+        }
+      }
+    }
+
+    return { x: maxX, y: maxY };
+  },
   addPeopleToFloor: function() {
     // For Demo using the hardcoded names
+    $("#getLocations").on("click", function() {
+      var endDate = $("#endDatePicker").val();
 
-    API.getPeopleLatestLocation().done(function(data) {
-      _.map(data, function(person, i) {
-        var personDiv = Grid.createPersonShape(person);
-        $("body").append(personDiv);
+      API.getPeopleLatestLocation(endDate).done(function(data) {
+        _.map(data, function(person, i) {
+          var computer = person.computerName;
+          var emptyTile = Grid.getEmptyTileAroundComputer(computer);
+          console.log("Empty Tile: ", emptyTile);
+
+          // Add to occupied tiles before adding person
+
+          DB.db
+            .get("occupiedTiles")
+            .push(emptyTile)
+            .write();
+
+          var personIcon = Grid.createPersonShape(person.userName);
+          var dataTile = `${emptyTile.x}x${emptyTile.y}`;
+
+          console.log(`[data-tile='${dataTile}']`);
+
+          $(`[data-tile='${dataTile}']`).append(personIcon);
+        });
+
+        // _.map(data, function(person, i) {
+        //   var personDiv = Grid.createPersonShape(person);
+        //   $("body").append(personDiv);
+        // });
       });
     });
   },
@@ -360,10 +414,11 @@ var Grid = {
 
     // Grid.createGrid();
     // Grid.addComputersToGrid();
+
+    Grid.addPeopleToFloor();
   }
 };
 
 $(document).ready(function() {
   Grid.init();
-  Grid.addPeopleToFloor();
 });

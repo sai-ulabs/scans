@@ -21,3 +21,5 @@ $("input#hasImageCheck").on("click", function(e) {
     recreate();
   }
 });
+
+$(document).ready(function() {});

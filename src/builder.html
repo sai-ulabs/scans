@@ -13,6 +13,7 @@
 
   <link rel="stylesheet" href="css/tools/jquery-ui.min.css">
   <link rel="stylesheet" href="css/tools/bootstrap-select.min.css">
+  <link rel="stylesheet" href="css/tools/bootstrap-datetimepicker.min.css">
   <!-- <link rel="stylesheet" href="css/tools/jquery.contextMenu.min.css"> -->
 
   <link rel="stylesheet" href="css/map-styles.css">
@@ -70,9 +71,17 @@
     <div class="d-flex flex-direction-column full-page">
       <div class="topbar flex-1 border-1 d-flex align-items-center justify-content-spacearound">
         <select name="building-selector" id="building-selector" class="selectpicker" data-live-search="true">
-
         </select>
-        <button class="btn btn-success">Done</button>
+        <div class="form-inline">
+          <div class='input-group date'>
+            <input type='text' class="form-control" id='endDatePicker' />
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+          </div>
+        </div>
+        <button class="btn btn-success" id="getLocations">Get Locations</button>
+        <!-- <button class="btn btn-success">Done</button> -->
       </div>
       <div class="droppable content-space d-flex flex-direction-row justify-content-spacebetween flex-9">
         <div class="sidebar-left flex-1 border-right d-flex flex-direction-column align-items-center">
@@ -87,10 +96,12 @@
               <!-- <img src="img/computer.png" class="computer-image" /> -->
               <i class="computer-image fa fa-desktop fa-2x"></i>
             </button>
-            <button class="palette-computer computer-style bg-transparent palette-item">
-              <!-- <img src="img/computer.png" class="computer-image" /> -->
-              <i class="computer-image fa fa-user fa-2x"></i>
-            </button>
+            <!-- 
+
+              <button class="palette-computer computer-style bg-transparent palette-item">
+                <i class="computer-image fa fa-user fa-2x"></i>
+              </button>
+            -->
             <button class="palette-computer-starter computer-style bg-transparent palette-item-starter" style="display:none;">
               <i class="computer-image fa fa-desktop fa-2x"></i>
             </button>
@@ -119,11 +130,13 @@
   <script src="js/tools/sweetalert2.js"></script>
   <script src="js/tools/jquery-3.3.1.min.js"></script>
   <script src="js/tools/jquery-ui.min.js"></script>
+  <script src="js/tools/moment.js"></script>
   <script src="js/tools/bootstrap.min.js"></script>
   <script src="js/tools/lodash.min.js"></script>
   <script src="js/tools/low.min.js"></script>
   <script src="js/tools/LocalStorage.min.js"></script>
   <script src="js/tools/bootstrap-select.min.js"></script>
+  <script src="js/tools/bootstrap-datetimepicker.min.js"></script>
   <!-- <script src="js/tools/photoswipe.min.js"></script>
   <script src="js/tools/photoswipe-ui-default.min.js"></script> -->
   <!-- <script src="js/tools/jquery.ui.position.min.js"></script>
@@ -132,11 +145,12 @@
   <!-- WARNING: DO NOT CHANGE THE ORDER OF THE SCRIPTS -->
 
 
+  <script src="js/scripts/init.js"></script>
   <script src="js/scripts/db.js"></script>
-  <script src="js/scripts/api.js"></script>
   <script src="js/scripts/alerts.js"></script>
   <script src="js/scripts/dragDrop.js"></script>
   <script src="js/scripts/grid.js"></script>
+  <script src="js/scripts/api.js"></script>
   <script src="js/scripts/palette.js"></script>
   <!-- <script src="js/globals.js"></script>
   <script src="js/storage.js"></script>
