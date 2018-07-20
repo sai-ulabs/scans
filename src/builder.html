@@ -39,111 +39,62 @@
   <noscript>
     You need to enable JavaScript to run this app.
   </noscript>
-  <!-- <div class="container">
-    <div class="form-inline">
-      <div class="form-group">
-        <select id="building-selector" class="form-control">
-          <option value="buliding-1">Test Building 1</option>
-        </select>
-        <select id="floor-selector" class="form-control">
-          <option value="floor-1">Test Floor 1</option>
-        </select>
+
+
+  <div class="page">
+    <div class="header-bar d-flex align-items-center">
+      <img src="img/gk-logo.png" alt="GateKeeper Logo" class="gk-logo">
+      <span class="header-text">LOCATION TRACKING SYSTEM</span>
+    </div>
+    <div class="content-box d-flex">
+      <div class="left-sidebar flex-1 d-flex flex-direction-column align-items-center">
+        <div class="left-sidebar__title">MAP EDITOR</div>
+        <button class="btn btn-default left-sidebar__button w-75 m-2">Add Building</button>
+        <button class="btn btn-default left-sidebar__button w-75 m-2">Add Floor</button>
+        <button class="btn btn-default left-sidebar__button w-75 m-2">Add Floor Map</button>
+        <div class="hr w-75"></div>
+        <div class="left-sidebar__title">WIDGETS</div>
+        <div class="h5">(Drag & Drop)</div>
+        <div id="map-palette-container" class="palette map-palette-container center-child">
+          <button class="palette-computer computer-style palette-item bg-transparent">
+            <!-- <img src="img/computer.png" class="computer-image" /> -->
+            <i class="computer-image fa fa-desktop fa-2x"></i>
+          </button>
+          <!-- 
+        
+                      <button class="palette-computer computer-style bg-transparent palette-item">
+                        <i class="computer-image fa fa-user fa-2x"></i>
+                      </button>
+                    -->
+          <button class="palette-computer-starter computer-style bg-transparent palette-item-starter" style="display:none;">
+            <i class="computer-image fa fa-desktop fa-2x"></i>
+          </button>
+        </div>
+      </div>
+      <div class="app-wrapper flex-9 d-flex flex-direction-column">
+        <div class="toolbar"></div>
+        <div class="center-right d-flex">
+          <div class="grid-container-area flex-8">
+            <div class="container flex-8 center-background bg-warning" style="overflow-y: auto; padding-bottom: 20px;">
+              <div id="building-title-sdf" class="h2 text-center building-title m-3">
+              </div>
+              <div class="grid-container">
+                <div class="map-grid-container d-flex justify-content-center"></div>
+                <div class="container people-legend d-flex justify-content-spacearound"></div>
+              </div>
+              <div class="floating-tags">
+              </div>
+            </div>
+          </div>
+          <div class="right-sidebar flex-2"></div>
+        </div>
       </div>
     </div>
+
+
+
   </div>
-  <div class="droppable">
-    <div class="center-all p-5">
-      <div class="grid-container">
-        <div class="map-grid-container"></div>
-      </div>
-    </div>
-    <div id="map-palette-container" class="palette map-palette-container p-5">
-      <button class="palette-computer computer-style bg-transparent palette-item">
-        <img src="img/computer.png" class="computer-image" />
-      </button>
-      <button id="btnCreateRoom" class="btn btn-warning">Create Room</button>
-      <button id="btnRemoveBorders" class="btn btn-warning">Remove Selection</button>
-      <div class="m-5">
-        Does the floor have image ?
-        <input type="checkbox" id="hasImageCheck" />
-      </div>
-    </div>
-  </div> -->
 
-  <div class="container">
-    <div class="d-flex flex-direction-column full-page">
-      <div class="topbar flex-1 border-1 d-flex align-items-center justify-content-spacearound">
-        <select name="building-selector" id="building-selector" class="selectpicker" data-live-search="true">
-        </select>
-        <div class="form-inline">
-          <div class='input-group date' id='endDatePicker'>
-            <input type='text' class="form-control" id="endDate" />
-            <span class="input-group-addon">
-              <span class="glyphicon glyphicon-calendar"></span>
-              <span class="increment glyphicon glyphicon-plus" style="padding-left: 10px;"></span>
-              <span class="decrement glyphicon glyphicon-minus" style="padding-left: 10px;"></span>
-
-            </span>
-          </div>
-        </div>
-        <button class="btn btn-success" id="startScanning">Start Scanning</button>
-        <button class="btn btn-warning" id="stopScanning">Stop Scanning</button>
-
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" class="" id="toggleNames" checked />Names</label>
-        </div>
-        <!-- <button class="btn btn-success">Done</button> -->
-      </div>
-      <div class="droppable content-space d-flex flex-direction-row justify-content-spacebetween flex-9">
-        <div class="sidebar-left flex-1 border-right d-flex flex-direction-column align-items-center">
-          <button class="btn btn-lg btn-default w-75 m-2">Add Building</button>
-          <button class="btn btn-lg btn-default w-75 m-2">Add Floor</button>
-          <button class="btn btn-lg btn-default w-75 m-2">Add Floor Map</button>
-          <div class="hr w-75"></div>
-          <div class="h3">Widgets</div>
-          <div class="h5">(Drag & Drop)</div>
-          <div id="map-palette-container" class="palette map-palette-container center-child">
-            <button class="palette-computer computer-style bg-transparent palette-item">
-              <!-- <img src="img/computer.png" class="computer-image" /> -->
-              <i class="computer-image fa fa-desktop fa-2x"></i>
-            </button>
-            <!-- 
-
-              <button class="palette-computer computer-style bg-transparent palette-item">
-                <i class="computer-image fa fa-user fa-2x"></i>
-              </button>
-            -->
-            <button class="palette-computer-starter computer-style bg-transparent palette-item-starter" style="display:none;">
-              <i class="computer-image fa fa-desktop fa-2x"></i>
-            </button>
-          </div>
-          <div class="hr w-75"></div>
-          <button id="btnCreateRoom" class="btn btn-lg btn-default w-75 m-2">Create Room</button>
-          <button id="btnRemoveBorders" class="btn btn-lg btn-default w-75 m-2">Cut Selection</button>
-        </div>
-
-        <div class="container flex-8 center-background bg-warning" style="overflow-y: auto; padding-bottom: 20px;">
-          <div id="building-title-sdf" class="h2 text-center building-title m-3">
-          </div>
-          <div class="grid-container">
-            <div class="map-grid-container d-flex justify-content-center"></div>
-            <div class="container people-legend d-flex justify-content-spacearound"></div>
-          </div>
-        </div>
-
-
-
-
-        <!-- <div class="sidebar-right flex-1 border-left d-flex flex-direction-column align-items-center">
-          <button id="btnCreateRoom" class="btn btn-lg btn-default w-75 m-2">Create Room</button>
-          <button id="btnRemoveBorders" class="btn btn-lg btn-default w-75 m-2">Cut Selection</button>
-        </div> -->
-      </div>
-    </div>
-    <div class="floating-tags">
-    </div>
-  </div>
 
   <!-- WARNING: DO NOT CHANGE THE ORDER OF THE SCRIPTS -->
 
@@ -158,6 +109,7 @@
   <script src="js/tools/bootstrap-select.min.js"></script>
   <script src="js/tools/bootstrap-datetimepicker.min.js"></script>
   <script src="js/tools/tether.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.1/TweenMax.min.js"></script>
 
 
 
