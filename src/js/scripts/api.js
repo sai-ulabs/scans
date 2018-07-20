@@ -1,10 +1,12 @@
+var port = 5930;
+
 var API = {
   scans: {},
-  getAllScans: function(endDate) {
+  getAllScans: function (endDate) {
     var dfd = $.Deferred();
 
     var startDate = moment(endDate)
-      .subtract(60, "minutes")
+      .subtract(5, "minutes")
       .format("MM/DD/YYYY HH:mm");
 
     console.group("Scans Window: ");
@@ -13,19 +15,19 @@ var API = {
     console.groupEnd();
 
     $.get(
-      `http://localhost:50045/computers/Getscans?startDate=${startDate}&endDate=${endDate}&recordCount=5000`
+      `http://localhost:${port}/computers/Getscans?startDate=${startDate}&endDate=${endDate}&recordCount=5000`
     )
-      .done(function(data) {
+      .done(function (data) {
         dfd.resolve(data);
       })
-      .fail(function(msg) {
+      .fail(function (msg) {
         dfd.reject(msg);
       });
 
     return dfd.promise();
   },
 
-  getRandomColor: function(i) {
+  getRandomColor: function (i) {
     var colors = [
       "maroon",
       "red",
@@ -43,12 +45,14 @@ var API = {
     ];
     return colors[i];
   },
-  getPeopleLatestLocation: function(
+  getPeopleLatestLocation: function (
     endDate = moment().format("MM/DD/YYYY HH:mm")
   ) {
     var dfd = $.Deferred();
 
-    API.getAllScans(endDate).done(function(data) {
+    API.getAllScans(endDate).done(function (data) {
+      console.log(data);
+
       // console.log(data);
       var computersInOffice = [
         "SVP-DESKTOP",
@@ -70,7 +74,7 @@ var API = {
 
       var peopleNotHere = [];
 
-      Object.keys(scansByNames).forEach(function(person, i) {
+      Object.keys(scansByNames).forEach(function (person, i) {
         // Key: User Name
         // Value : List of scans
 
@@ -80,7 +84,7 @@ var API = {
 
         var values = scansByNames[person];
         var dataWithOfficeComputers =
-          values.filter(function(scan) {
+          values.filter(function (scan) {
             return computersInOffice.includes(scan.computerName);
           }) || null;
 
@@ -105,7 +109,7 @@ var API = {
             }
           }
 
-          Object.entries(near).forEach(function(nearEntry) {
+          Object.entries(near).forEach(function (nearEntry) {
             var computerName = nearEntry[0];
             var timestampForNear = nearEntry[1];
 
@@ -125,7 +129,7 @@ var API = {
 
           // Find the latest near among the 1's
           var nearComputersForPerson = _.keys(
-            _.pickBy(results, function(o) {
+            _.pickBy(results, function (o) {
               return o === 1;
             })
           );
@@ -151,7 +155,7 @@ var API = {
 
       var peopleInOffice = {};
 
-      Object.keys(latestScans).forEach(function(key, i) {
+      Object.keys(latestScans).forEach(function (key, i) {
         if (latestScans[key]) {
           peopleInOffice[key] = latestScans[key];
         }
@@ -181,15 +185,15 @@ var API = {
     });
     return dfd.promise();
   },
-  getComputerList: function() {
+  getComputerList: function () {
     var dfd = $.Deferred();
-    $.get("http://localhost:50045/Computers/GetAllComputers", {
+    $.get(`http://localhost:${port}/Computers/GetAllComputers`, {
       dataType: "json"
     })
-      .done(function(data) {
+      .done(function (data) {
         dfd.resolve(data);
       })
-      .fail(function(msg) {
+      .fail(function (msg) {
         dfd.reject(msg);
       });
 
@@ -197,7 +201,7 @@ var API = {
   }
 };
 
-$(document).ready(function() {
+$(document).ready(function () {
   API.getComputerList();
 
   // $("#getLocations").on("click", function() {

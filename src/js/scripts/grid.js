@@ -25,7 +25,7 @@ var Grid = {
       .attr("data-toggle", "tooltip")
       .attr("title", person)
       .css({ color: color })
-      .addClass("faa-burst animated")
+      .addClass("faa-burst animated person")
       .clone();
 
 

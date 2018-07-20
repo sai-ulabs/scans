@@ -10,7 +10,11 @@
     "builder-hotel": "concurrently \"npm run sass\" \"npm run builder\" "
   },
   "devDependencies": {
-    "browser-sync": "^2.24.4",
+    "browser-sync": "^2.24.5",
     "lowdb": "^1.0.0"
+  },
+  "dependencies": {
+    "concurrently": "^3.6.0",
+    "sass": "^1.9.2"
   }
 }

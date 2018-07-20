@@ -1,6 +1,16 @@
 html,
 body {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
 }
 
 .rect-style {
@@ -51,15 +61,4 @@ body {
 .map-trash-state-hover {
   /* background: #808080 !important; */
   border: 3px solid #e85d75;
-}
-
-.halberd-copy {
-  height: 15px;
-  width: 15px;
-  border-radius: 10px;
-  background: lightseagreen;
-}
-
-.center-background {
-  background: rgba($color: #cdd5e0, $alpha: 0.2);
 }
