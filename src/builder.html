@@ -46,12 +46,15 @@
       <img src="img/gk-logo.png" alt="GateKeeper Logo" class="gk-logo">
       <span class="header-text">LOCATION TRACKING SYSTEM</span>
     </div>
-    <div class="content-box d-flex">
+    <div class="droppable content-box d-flex">
       <div class="left-sidebar flex-1 d-flex flex-direction-column align-items-center">
         <div class="left-sidebar__title">MAP EDITOR</div>
         <button class="btn btn-default left-sidebar__button w-75 m-2">Add Building</button>
         <button class="btn btn-default left-sidebar__button w-75 m-2">Add Floor</button>
         <button class="btn btn-default left-sidebar__button w-75 m-2">Add Floor Map</button>
+        <div class="hr w-75"></div>
+        <button id="btnCreateRoom" class="btn btn-default left-sidebar__button w-75 m-2">Create Room</button>
+        <button id="btnRemoveBorders" class="btn btn-default left-sidebar__button w-75 m-2">Cut Selection</button>
         <div class="hr w-75"></div>
         <div class="left-sidebar__title">WIDGETS</div>
         <div class="h5">(Drag & Drop)</div>
@@ -72,10 +75,32 @@
         </div>
       </div>
       <div class="app-wrapper flex-9 d-flex flex-direction-column">
-        <div class="toolbar"></div>
-        <div class="center-right d-flex">
+        <div class="toolbar d-flex align-items-center justify-content-spacearound">
+          <select name="building-selector" id="building-selector" class="selectpicker" data-live-search="true">
+          </select>
+          <div class="form-inline">
+            <div class='input-group date' id='endDatePicker'>
+              <input type='text' class="form-control" id="endDate" />
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+                <span class="increment glyphicon glyphicon-plus" style="padding-left: 10px;"></span>
+                <span class="decrement glyphicon glyphicon-minus" style="padding-left: 10px;"></span>
+
+              </span>
+            </div>
+          </div>
+          <button class="btn btn-success" id="startScanning">Start Scanning</button>
+          <button class="btn btn-secondary" id="stopScanning">Stop Scanning</button>
+          <!-- <button class="btn btn-danger" id="animage">Animate</button> -->
+
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" class="" id="toggleNames" checked />Names</label>
+          </div>
+        </div>
+        <div class="center-right">
           <div class="grid-container-area">
-            <div class="container flex-8 center-background bg-warning" style="overflow-y: auto; padding-bottom: 20px;">
+            <div class="flex-8 center-background" style="overflow-y: auto; padding-bottom: 20px;">
               <div id="building-title-sdf" class="h2 text-center building-title m-3">
               </div>
               <div class="grid-container">
@@ -86,7 +111,7 @@
               </div>
             </div>
           </div>
-          <div class="right-sidebar flex-2"></div>
+          <!-- <div class="right-sidebar flex-2"></div> -->
         </div>
       </div>
     </div>

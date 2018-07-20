@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="theme-color" content="#000000">
+
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <link rel="stylesheet" href="css/tools/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/tools/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+
+  <link rel="stylesheet" href="css/tools/jquery-ui.min.css">
+  <link rel="stylesheet" href="css/tools/bootstrap-select.min.css">
+  <link rel="stylesheet" href="css/tools/bootstrap-datetimepicker.min.css">
+  <link rel="stylesheet" href="css/tools/tether.min.css">
+  <link rel="stylesheet" href="css/tools/tether-theme-basic.min.css">
+
+  <link rel="stylesheet" href="css/tools/font-awesome-animation.min.css">
+
+  <link rel="stylesheet" href="css/map-styles.css">
+  <link rel="stylesheet" href="css/map-layout.css">
+
+  <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+  <title>Grid</title>
+
+</head>
+
+<body>
+  <noscript>
+    You need to enable JavaScript to run this app.
+  </noscript>
+  <!-- <div class="container">
+    <div class="form-inline">
+      <div class="form-group">
+        <select id="building-selector" class="form-control">
+          <option value="buliding-1">Test Building 1</option>
+        </select>
+        <select id="floor-selector" class="form-control">
+          <option value="floor-1">Test Floor 1</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="droppable">
+    <div class="center-all p-5">
+      <div class="grid-container">
+        <div class="map-grid-container"></div>
+      </div>
+    </div>
+    <div id="map-palette-container" class="palette map-palette-container p-5">
+      <button class="palette-computer computer-style bg-transparent palette-item">
+        <img src="img/computer.png" class="computer-image" />
+      </button>
+      <button id="btnCreateRoom" class="btn btn-warning">Create Room</button>
+      <button id="btnRemoveBorders" class="btn btn-warning">Remove Selection</button>
+      <div class="m-5">
+        Does the floor have image ?
+        <input type="checkbox" id="hasImageCheck" />
+      </div>
+    </div>
+  </div> -->
+
+  <div class="page d-flex flex-direction-column">
+    <div class="header-bar flex-1 d-flex align-items-center">
+      <img src="img/gk-logo.png" alt="GateKeeper Logo" class="gk-logo">
+      <span class="header-text">LOCATION TRACKING SYSTEM</span>
+    </div>
+    <div class="content-box flex-9 d-flex">
+      <div class="left-sidebar flex-1"></div>
+      <div class="app-wrapper flex-9 d-flex flex-direction-column">
+        <div class="toolbar flex-1"></div>
+        <div class="center-right flex-9">
+          <div class="grid-container-area flex-8"></div>
+          <div class="right-sidebar flex-2"></div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="d-flex flex-direction-column full-page">
+      <div class="topbar flex-1 border-1 d-flex align-items-center justify-content-spacearound">
+        <select name="building-selector" id="building-selector" class="selectpicker" data-live-search="true">
+        </select>
+        <div class="form-inline">
+          <div class='input-group date' id='endDatePicker'>
+            <input type='text' class="form-control" id="endDate" />
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+              <span class="increment glyphicon glyphicon-plus" style="padding-left: 10px;"></span>
+              <span class="decrement glyphicon glyphicon-minus" style="padding-left: 10px;"></span>
+
+            </span>
+          </div>
+        </div>
+        <button class="btn btn-success" id="startScanning">Start Scanning</button>
+        <button class="btn btn-warning" id="stopScanning">Stop Scanning</button>
+        <!-- <button class="btn btn-danger" id="animage">Animate</button> -->
+
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" class="" id="toggleNames" checked />Names</label>
+        </div>
+        <!-- <button class="btn btn-success">Done</button> -->
+      </div>
+      <div class="droppable content-space d-flex flex-direction-row justify-content-spacebetween flex-9">
+        <div class="sidebar-left flex-1 border-right d-flex flex-direction-column align-items-center">
+          <button class="btn btn-lg btn-default w-75 m-2">Add Building</button>
+          <button class="btn btn-lg btn-default w-75 m-2">Add Floor</button>
+          <button class="btn btn-lg btn-default w-75 m-2">Add Floor Map</button>
+          <div class="hr w-75"></div>
+          <div class="h3">Widgets</div>
+          <div class="h5">(Drag & Drop)</div>
+          <div id="map-palette-container" class="palette map-palette-container center-child">
+            <button class="palette-computer computer-style bg-transparent palette-item">
+              <!-- <img src="img/computer.png" class="computer-image" /> -->
+              <i class="computer-image fa fa-desktop fa-2x"></i>
+            </button>
+            <!-- 
+
+              <button class="palette-computer computer-style bg-transparent palette-item">
+                <i class="computer-image fa fa-user fa-2x"></i>
+              </button>
+            -->
+            <button class="palette-computer-starter computer-style bg-transparent palette-item-starter" style="display:none;">
+              <i class="computer-image fa fa-desktop fa-2x"></i>
+            </button>
+          </div>
+          <div class="hr w-75"></div>
+          <button id="btnCreateRoom" class="btn btn-lg btn-default w-75 m-2">Create Room</button>
+          <button id="btnRemoveBorders" class="btn btn-lg btn-default w-75 m-2">Cut Selection</button>
+        </div>
+
+        <div class="container flex-8 center-background bg-warning" style="overflow-y: auto; padding-bottom: 20px;">
+          <div id="building-title-sdf" class="h2 text-center building-title m-3">
+          </div>
+          <div class="grid-container">
+            <div class="map-grid-container d-flex justify-content-center"></div>
+            <div class="container people-legend d-flex justify-content-spacearound"></div>
+          </div>
+        </div>
+
+
+
+
+        <!-- <div class="sidebar-right flex-1 border-left d-flex flex-direction-column align-items-center">
+          <button id="btnCreateRoom" class="btn btn-lg btn-default w-75 m-2">Create Room</button>
+          <button id="btnRemoveBorders" class="btn btn-lg btn-default w-75 m-2">Cut Selection</button>
+        </div> -->
+      </div>
+    </div>
+    <div class="floating-tags">
+    </div>
+  </div>
+
+
+  <!-- WARNING: DO NOT CHANGE THE ORDER OF THE SCRIPTS -->
+
+  <script src="js/tools/sweetalert2.js"></script>
+  <script src="js/tools/jquery-3.3.1.min.js"></script>
+  <script src="js/tools/jquery-ui.min.js"></script>
+  <script src="js/tools/moment.js"></script>
+  <script src="js/tools/bootstrap.min.js"></script>
+  <script src="js/tools/lodash.min.js"></script>
+  <script src="js/tools/low.min.js"></script>
+  <script src="js/tools/LocalStorage.min.js"></script>
+  <script src="js/tools/bootstrap-select.min.js"></script>
+  <script src="js/tools/bootstrap-datetimepicker.min.js"></script>
+  <script src="js/tools/tether.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.1/TweenMax.min.js"></script>
+
+
+
+
+  <!-- WARNING: DO NOT CHANGE THE ORDER OF THE SCRIPTS -->
+
+
+  <script src="js/scripts/loads.js"></script>
+  <script src="js/scripts/db.js"></script>
+  <script src="js/scripts/alerts.js"></script>
+  <script src="js/scripts/dragDrop.js"></script>
+  <script src="js/scripts/gridUtils.js"></script>
+  <script src="js/scripts/grid.js"></script>
+  <script src="js/scripts/api.js"></script>
+  <script src="js/scripts/palette.js"></script>
+  <script src="js/scripts/init.js"></script>
+
+</body>
+
+</html>

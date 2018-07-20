@@ -277,7 +277,7 @@ var Grid = {
     floorDiv.addClass("ui-widget-content").css({
       height: floorHeight,
       width: floorWidth,
-      background: "lightgreen"
+      background: "#F2F2F2"
       // margin: "10px",
       // border: "2px solid gray"
     });
