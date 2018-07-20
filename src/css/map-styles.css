@@ -64,4 +64,8 @@ body {
   background: rgba(205, 213, 224, 0.2);
 }
 
+.floating-tags {
+  overflow: auto;
+}
+
 /*# sourceMappingURL=map-styles.css.map */

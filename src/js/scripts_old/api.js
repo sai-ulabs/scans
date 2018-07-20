@@ -1,5 +1,4 @@
-var port = 5930;
-window.interval = 15;
+
 
 var API = {
   scans: {},
@@ -7,7 +6,7 @@ var API = {
     var dfd = $.Deferred();
 
     var startDate = moment(endDate)
-      .subtract(interval, "minutes")
+      .subtract(60, "minutes")
       .format("MM/DD/YYYY HH:mm");
 
     console.group("Scans Window: ");
@@ -16,7 +15,7 @@ var API = {
     console.groupEnd();
 
     $.get(
-      `http://localhost:${port}/computers/Getscans?startDate=${startDate}&endDate=${endDate}&recordCount=5000`
+      `http://localhost:50045/computers/Getscans?startDate=${startDate}&endDate=${endDate}&recordCount=5000`
     )
       .done(function (data) {
         dfd.resolve(data);
@@ -52,7 +51,6 @@ var API = {
     var dfd = $.Deferred();
 
     API.getAllScans(endDate).done(function (data) {
-
       // console.log(data);
       var computersInOffice = [
         "SVP-DESKTOP",
@@ -187,7 +185,7 @@ var API = {
   },
   getComputerList: function () {
     var dfd = $.Deferred();
-    $.get(`http://localhost:${port}/Computers/GetAllComputers`, {
+    $.get("http://localhost:50045/Computers/GetAllComputers", {
       dataType: "json"
     })
       .done(function (data) {

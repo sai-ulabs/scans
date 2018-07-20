@@ -1,6 +1,6 @@
 $("#endDate").datetimepicker({
   format: "MM/DD/YYYY HH:mm",
-  stepping: window.interval,
+  stepping: 15,
   sideBySide: true,
   defaultDate: moment().startOf('hour').format("MM/DD/YYYY HH:mm")
   // inline: true,
@@ -9,7 +9,7 @@ $("#endDate").datetimepicker({
 $(".increment").on("click", function () {
   $("#endDate").val(
     moment($("#endDate").val())
-      .add(window.interval, "minutes")
+      .add(15, "minutes")
       .format("MM/DD/YYYY HH:mm")
   );
   Grid.updateMap();
@@ -18,7 +18,7 @@ $(".increment").on("click", function () {
 $(".decrement").on("click", function () {
   $("#endDate").val(
     moment($("#endDate").val())
-      .subtract(window.interval, "minutes")
+      .subtract(15, "minutes")
       .format("MM/DD/YYYY HH:mm")
   );
   Grid.updateMap();

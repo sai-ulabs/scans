@@ -63,3 +63,7 @@ body {
 .center-background {
   background: rgba($color: #cdd5e0, $alpha: 0.2);
 }
+
+.floating-tags {
+  overflow: auto;
+}

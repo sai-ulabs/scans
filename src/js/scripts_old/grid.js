@@ -19,15 +19,13 @@ var Grid = {
     //     background: "transparent"
     //   })
 
-    // var personDiv = $("<img src='img/person.png''></img>")
     var personDiv = $("<i class='fa fa-user fa-2x'></i>")
       .attr("data-type", "person")
       .attr("data-person", person)
       .attr("data-toggle", "tooltip")
       .attr("title", person)
       .css({ color: color })
-      .addClass("faa-burst animated person")
-      // .addClass("person")
+      .addClass("faa-burst animated")
       .clone();
 
 
@@ -279,7 +277,7 @@ var Grid = {
     floorDiv.addClass("ui-widget-content").css({
       height: floorHeight,
       width: floorWidth,
-      background: "lightgreen"
+      background: "#F2F2F2"
       // margin: "10px",
       // border: "2px solid gray"
     });
