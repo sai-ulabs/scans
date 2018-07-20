@@ -9,7 +9,7 @@ var DB = {
     { x: 11, y: 10 },
     { x: 18, y: 18 }
   ],
-  init: function(db) {
+  init: function (db) {
     DB.db = db;
     db.defaults({
       userId: "0000",
@@ -172,13 +172,13 @@ var DB = {
       ]
     }).write();
   },
-  addRoomToDb: function(room) {
+  addRoomToDb: function (room) {
     DB.db
       .get("rooms")
       .push(room)
       .write();
   },
-  addComputerToDb: function(oldLocation, newLocation) {
+  addComputerToDb: function (oldLocation, newLocation) {
     var computers = DB.db.get("computers");
 
     var newCoordinates = {
@@ -210,7 +210,7 @@ var DB = {
       computers.push(newComputer).write();
     }
   },
-  getUnassignedComputerList: function() {
+  getUnassignedComputerList: function () {
     var computers = DB.db
       .get("computers")
       // .filter({ assigned: false })
@@ -219,8 +219,8 @@ var DB = {
   }
 };
 
-$(document).ready(function() {
-  // localStorage.removeItem("db");
+$(document).ready(function () {
+  localStorage.removeItem("db");
   var adapter = new LocalStorage("db");
   var db = low(adapter);
   DB.init(db);
