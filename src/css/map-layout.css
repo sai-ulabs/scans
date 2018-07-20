@@ -29,7 +29,10 @@
 .map-palette-container {
   height: 100px;
   background: white;
-  width: 100%;
+  width: 80%;
+}
+.map-palette-container .palette-item .fa {
+  color: #727272;
 }
 
 .bg-transparent {
@@ -282,7 +285,8 @@
   -moz-border-left-colors: none;
   -moz-border-right-colors: none;
   -moz-border-top-colors: none;
-  border-color: #eeeeee -moz-use-text-color #ffffff;
+  border-color: #eeeeee;
+  -moz-use-text-color: #ffffff;
   border-style: solid none;
   border-width: 0.2px 0;
   margin: 18px 0;
@@ -314,6 +318,69 @@
 
 .building-title {
   color: #363536;
+}
+
+.halberd-copy {
+  height: 15px;
+  width: 15px;
+  border-radius: 10px;
+  background: lightseagreen;
+}
+
+.center-background {
+  background: rgba(205, 213, 224, 0.2);
+}
+
+.gk-logo {
+  width: 26px;
+  margin-right: 10px;
+}
+
+.header-bar {
+  position: relative;
+  padding: 10px;
+  height: 50px;
+  width: 100%;
+  background-color: #34475A;
+}
+
+.header-text {
+  font-size: 18px;
+  color: #ffffff;
+}
+
+.content-box {
+  height: calc(100vh - 50px);
+  background: #F2F2F2;
+}
+
+.page {
+  height: 100%;
+  width: 100%;
+}
+
+.left-sidebar {
+  position: relative;
+  background-color: #407CCA;
+  color: #ffffff;
+}
+.left-sidebar__button {
+  background: transparent;
+  color: white;
+}
+.left-sidebar__title {
+  margin-top: 20px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.toolbar {
+  position: relative;
+  padding: 10px;
+  height: 50px;
+  width: 100%;
+  background-color: #FFFFFF;
+  border-bottom: 1px solid #B8B8B8;
 }
 
 /*# sourceMappingURL=map-layout.css.map */
