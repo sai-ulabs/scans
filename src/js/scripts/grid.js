@@ -520,5 +520,7 @@ $(document).ready(function () {
 
 
   GridUtils.startScanning();
+  $("#stopScanning").prop("disabled", true);
+  $("#startScanning").prop("disabled", false);
 
 });
