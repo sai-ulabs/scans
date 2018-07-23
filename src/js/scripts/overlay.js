@@ -13,6 +13,8 @@ var canvas = $(".canvas").css({
 });
 
 var canvasPosition = canvas.get(0).getBoundingClientRect();
+console.log(canvasPosition);
+
 
 var roomProperties = {
 
@@ -75,7 +77,13 @@ $(function () {
 
 
   $("body").mousedown(function (e) {
-    console.log(e.clientX, e.clientY);
+    // console.log(e.clientX, e.clientY);
+  })
+
+  $(window).on('resize', function () {
+    canvasPosition = canvas.get(0).getBoundingClientRect();
+    console.log(canvasPosition);
+
   })
 
 
