@@ -519,8 +519,10 @@ $(document).ready(function () {
   Grid.init();
 
 
-  GridUtils.startScanning();
   $("#stopScanning").prop("disabled", true);
   $("#startScanning").prop("disabled", false);
+  Grid.clearPreviousPeopleFromMap();
+
+  // GridUtils.startScanning();
 
 });
