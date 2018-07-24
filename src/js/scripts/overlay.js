@@ -2,7 +2,8 @@ var mouse = {}
 
 var rect = $("<div></div>").css({
   position: "absolute",
-  backgroundColor: "rgba(57, 70, 78, 0.8)",
+  // backgroundColor: "rgba(57, 70, 78, 0.8)",
+  backgroundColor: "#ccc",
   zIndex: 2
 });
 
@@ -12,7 +13,8 @@ var canvas = $(".canvas").css({
   padding: 0
 });
 
-var canvasPosition = canvas.get(0).getBoundingClientRect();
+// var canvasPosition = canvas.get(0).getBoundingClientRect();
+var canvasPosition = canvas.absoluteBoundingRect();
 console.log(canvasPosition);
 
 
@@ -25,17 +27,17 @@ var roomProperties = {
 function createRectangle() {
   var block = rect.last().clone();
 
-  var rectLeft = mouse.startX - canvasPosition.left;
-  var rectTop = mouse.startY - canvasPosition.top;
+  var rectLeft = mouse.startX - canvasPosition.left + window.pageXOffset;
+  var rectTop = mouse.startY - canvasPosition.top + window.pageYOffset;
 
   if (mouse.startX > mouse.endX) {
     // This means rectangle is drawn to left
-    rectLeft = mouse.endX - canvasPosition.left;
+    rectLeft = mouse.endX - canvasPosition.left + window.pageXOffset;
 
   }
   if (mouse.startY > mouse.endY) {
     // This means reactangle is drawn from bottom
-    rectTop = mouse.endY - canvasPosition.top;
+    rectTop = mouse.endY - canvasPosition.top + window.pageYOffset;
 
   }
 
@@ -57,7 +59,8 @@ function createRectangle() {
     .resizable({
       containment: "parent",
       handles: "n, e, s, w, nw, ne, se, sw"
-    });
+    })
+
   canvas.append(block);
 }
 
@@ -81,9 +84,7 @@ $(function () {
   })
 
   $(window).on('resize', function () {
-    canvasPosition = canvas.get(0).getBoundingClientRect();
-    console.log(canvasPosition);
-
+    canvasPosition = canvas.absoluteBoundingRect();
   })
 
 

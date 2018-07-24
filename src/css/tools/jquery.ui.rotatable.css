@@ -1,0 +1,11 @@
+.ui-rotatable-handle {
+  height: 8px;
+  width: 8px;
+  border-radius: 100%;
+  cursor: pointer;
+  background-color: red;
+  background-size: 100%;
+  position: absolute;
+  left: 50%;
+  top: -25%;
+}

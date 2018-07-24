@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="css/tools/bootstrap-datetimepicker.min.css">
   <link rel="stylesheet" href="css/tools/tether.min.css">
   <link rel="stylesheet" href="css/tools/tether-theme-basic.min.css">
+  <link rel="stylesheet" href="css/tools/jquery.ui.rotatable.css">
 
   <link rel="stylesheet" href="css/tools/font-awesome-animation.min.css">
 
@@ -109,9 +110,8 @@
 
           <!-- Canvas starts -->
           <div class="canvas-container h__100">
-
             <div class="canvas">
-              <div id="grid-div" style="width:100%;height:100%;overflow:hidden;">
+              <div class="grid-div" style="width:100%;height:100%;overflow:hidden;">
                 <svg id="svg-grid" zoomAndPan="disable" currentscale="2" xmlns="http://www.w3.org/2000/svg" version="1.2" width="3000" height="12000">
                   <pattern id="grid-pattern" patternUnits="userSpaceOnUse" x="0" y="0" width="100" height="100">
                     <g id="sharp" transform="translate(-0.5,-0.5)">
@@ -131,9 +131,8 @@
                 </svg>
               </div>
             </div>
-
-            <!-- Canvas Ends -->
           </div>
+          <!-- Canvas Ends -->
         </div>
         <!-- <div class="right-sidebar flex-2"></div> -->
       </div>
@@ -149,6 +148,7 @@
     <script src="js/tools/sweetalert2.js"></script>
     <script src="js/tools/jquery-3.3.1.min.js"></script>
     <script src="js/tools/jquery-ui.min.js"></script>
+    <script src="js/tools/jquery.ui.rotatable.min.js"></script>
     <script src="js/tools/moment.js"></script>
     <script src="js/tools/bootstrap.min.js"></script>
     <script src="js/tools/lodash.min.js"></script>
@@ -165,6 +165,7 @@
     <!-- WARNING: DO NOT CHANGE THE ORDER OF THE SCRIPTS -->
 
 
+    <script src="js/scripts/rtlsPlugins.js"></script>
     <script src="js/scripts/loads.js"></script>
     <script src="js/scripts/db.js"></script>
     <script src="js/scripts/alerts.js"></script>
