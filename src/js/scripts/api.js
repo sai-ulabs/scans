@@ -1,4 +1,4 @@
-var port = 5930;
+var port = 44325;
 window.interval = 15;
 
 var API = {
@@ -16,7 +16,7 @@ var API = {
     console.groupEnd();
 
     $.get(
-      `http://localhost:${port}/computers/Getscans?startDate=${startDate}&endDate=${endDate}&recordCount=5000`
+      `https://localhost:${port}/computers/Getscans?startDate=${startDate}&endDate=${endDate}&recordCount=5000`
     )
       .done(function (data) {
         dfd.resolve(data);
@@ -187,7 +187,7 @@ var API = {
   },
   getComputerList: function () {
     var dfd = $.Deferred();
-    $.get(`http://localhost:${port}/Computers/GetAllComputers`, {
+    $.get(`https://localhost:${port}/Computers/GetAllComputers`, {
       dataType: "json"
     })
       .done(function (data) {
