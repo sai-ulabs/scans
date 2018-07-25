@@ -4,7 +4,9 @@ $("#endDate").datetimepicker({
   sideBySide: true,
   defaultDate: moment().startOf('hour').format("MM/DD/YYYY HH:mm")
   // inline: true,
-});
+}).on("dp.change", function () {
+  GridUtils.getSafeStartScanning()();
+})
 
 $(".increment").on("click", function () {
   $("#endDate").val(
@@ -12,7 +14,7 @@ $(".increment").on("click", function () {
       .add(window.interval, "minutes")
       .format("MM/DD/YYYY HH:mm")
   );
-  Grid.updateMap();
+  GridUtils.getSafeStartScanning()();
 });
 
 $(".decrement").on("click", function () {
@@ -21,20 +23,22 @@ $(".decrement").on("click", function () {
       .subtract(window.interval, "minutes")
       .format("MM/DD/YYYY HH:mm")
   );
-  Grid.updateMap();
+  GridUtils.getSafeStartScanning()();
 });
 
 
 
+// $("#startScanning").on("click", function () {
+//   GridUtils.getSafeStartScanning()();
+// });
 
+// $("#stopScanning").on("click", function () {
+//   if (window.mapInterval) {
+//     clearInterval(window.mapInterval);
+//     $("#stopScanning").prop("disabled", true);
+//     $("#startScanning").prop("disabled", false);
 
-$("#stopScanning").on("click", function () {
-  if (window.mapInterval) {
-    clearInterval(window.mapInterval);
-    $("#stopScanning").prop("disabled", true);
-    $("#startScanning").prop("disabled", false);
+//     console.log("Scanning Stopped");
 
-    console.log("Scanning Stopped");
-
-  }
-})
+//   }
+// })

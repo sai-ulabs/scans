@@ -9,17 +9,6 @@ var Grid = {
   createPersonShape: function (person) {
     var color = API.getRandomColor(window.personIndex++);
     window.personColor = color;
-    // var circle = $("<span></span>").addClass("circle-person");
-    // circle
-    //   .css({
-    //     height: 100,
-    //     width: 100,
-    //     borderRadius: "50%",
-    //     border: `2px solid ${color}`,
-    //     background: "transparent"
-    //   })
-
-    // var personDiv = $("<img src='img/person.png''></img>")
     var personDiv = $("<i class='fa fa-user fa-2x'></i>")
       .attr("data-type", "person")
       .attr("data-person", person)
@@ -444,11 +433,10 @@ var Grid = {
   },
   updateMap: function () {
     // Remove previous people and occupied titles
-    Grid.clearPreviousPeopleFromMap();
-
     var endDate = $("#endDate").val();
-
+    // var debouncedAPICall = _.debounce(API.getPeopleLatestLocation, 500);
     API.getPeopleLatestLocation(endDate).done(function (data) {
+      Grid.clearPreviousPeopleFromMap();
       _.map(data, function (person, i) {
         var computer = person.computerName;
         var emptyTile = Grid.getEmptyTileAroundComputer(computer);
@@ -482,7 +470,9 @@ var Grid = {
       });
     });
   },
-
+  getSafeUpdateMap: function () {
+    return _.debounce(Grid.updateMap, 500)
+  },
   addPeopleToFloor: function () {
     // For Demo using the hardcoded names
     $("#startScanning").on("click", function () {
@@ -523,6 +513,6 @@ $(document).ready(function () {
   $("#startScanning").prop("disabled", false);
   Grid.clearPreviousPeopleFromMap();
 
-  // GridUtils.startScanning();
+  GridUtils.startScanning();
 
 });
