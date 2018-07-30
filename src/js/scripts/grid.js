@@ -450,20 +450,26 @@ var Grid = {
           .push(emptyTile)
           .write();
 
-        var personIcon = Grid.createPersonShape(person.userName);
+        var invalidUsers = ["TestUser", "TestUser0", "TestUser1", "TestUser2", "TestUser3", "TestUser4", "TestUser5"];
 
-        var dataTile = `${emptyTile.x}x${emptyTile.y}`;
+        if (!invalidUsers.includes(person.userName)) {
+          var personIcon = Grid.createPersonShape(person.userName);
+
+          var dataTile = `${emptyTile.x}x${emptyTile.y}`;
 
 
-        var personTileSelector = `[data-tile='${dataTile}']`;
-        var personTile = $(personTileSelector);
-        personTile.append(personIcon);
+          var personTileSelector = `[data-tile='${dataTile}']`;
+          var personTile = $(personTileSelector);
+          personTile.append(personIcon);
 
-        GridUtils.attachFloatingTitle({
-          title: person.userName,
-          element: personTile,
-          color: window.personColor
-        });
+          GridUtils.attachFloatingTitle({
+            title: person.userName,
+            element: personTile,
+            color: window.personColor
+          });
+        }
+
+
 
         // var cX = $(personTile);
         // var cY = personTile.clientY;

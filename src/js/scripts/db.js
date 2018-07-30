@@ -4,6 +4,7 @@ var DB = {
     { x: 9, y: 1 },
     { x: 4, y: 1 },
     { x: 4, y: 9 },
+    { x: 4, y: 17 },
     { x: 2, y: 18 },
     { x: 11, y: 18 },
     { x: 11, y: 10 },
@@ -98,6 +99,17 @@ var DB = {
             y: 9
           },
           places: { x: 4, y: 7 }
+        },
+        {
+          name: "UL-LAPTOP-04",
+          buildingId: "building-0",
+          floorId: "floor-0",
+          roomId: 0,
+          coordinates: {
+            x: 4,
+            y: 17
+          },
+          places: { x: 4, y: 17 }
         },
         // {
         //   buildingId: "building-0",

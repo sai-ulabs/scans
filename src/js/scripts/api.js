@@ -61,7 +61,8 @@ var API = {
         "UL-LAPTOP-07",
         "DESKTOP-C3PEVEC",
         "UL-BLACK-05",
-        "COOLCAD-SLIM-03"
+        "COOLCAD-SLIM-03",
+        "UL-LAPTOP-04"
       ];
 
       var scansByNames = _
