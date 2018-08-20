@@ -1,4 +1,4 @@
-var ip = "192.168.1.44";
+var ip = "192.168.1.100";
 var port = 5729;
 window.interval = 15;
 
